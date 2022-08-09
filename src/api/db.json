@@ -1,0 +1,40 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "email": "pablo@gmail.com",
+      "phone": "2352407827"
+    },
+    {
+      "id": "2",
+      "email": "pedro@gmail.com",
+      "phone": "2352407827"
+    }
+  ],
+  "turnos": [
+    {
+      "id": "1",
+      "email": "pablo@gmail.com",
+      "phone": "2352407827",
+      "fecha": "Sábado, 13 de agosto de 2022",
+      "hora": "10:30",
+      "disponible": false
+    },
+    {
+      "id": "2",
+      "email": "pablito@gmail.com",
+      "phone": "2352407827",
+      "fecha": "Viernes, 12 de agosto de 2022",
+      "hora": "10:30",
+      "disponible": false
+    },
+    {
+      "email": "pablo@gmail.com",
+      "phone": "2352407827",
+      "fecha": "2022-08-19T03:00:00.000Z",
+      "hora": "10:00",
+      "disponible": false,
+      "id": "XnK3Iww"
+    }
+  ]
+}
