@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Axios from "axios";
 
 import { Calendar } from "react-calendar";
@@ -6,19 +6,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { unsetUser } from "../feactures/users/usersSlice";
 
+import { setTurn } from "../feactures/turns/turnsSlice";
+import { setDate, setTime } from "../feactures/date/dateSlice";
+import { horariosTurnos } from "../utils/Data";
 import "react-calendar/dist/Calendar.css";
 import "./Home.css";
-import { setTurn } from "../feactures/turns/turnsSlice";
-import { dateSlice, setDate, setTime } from "../feactures/date/dateSlice";
-import { horariosTurnos } from "../utils/Data";
+import { setReserved } from "../feactures/turns/turnsReserved";
 const Home = () => {
-  // const [date, setDate] = useState(new Date());
-
-  // const [fechaSeleccionada, cambiarFechaSelecionada] = useState(new Date());
   const user = useSelector((state) => state.users);
   const date = useSelector((state) => state.date.date);
   const time = useSelector((state) => state.date.hora);
+  const reserved = useSelector((state) => state.turnsReserved.turns);
 
+  console.log(date.toISOString());
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
@@ -91,6 +91,17 @@ const Home = () => {
     );
   */
 
+  useEffect(() => {
+    Axios.get("http://localhost:5000/turnos").then((response) => {
+      const data = response.data;
+      dispatch(
+        setReserved({
+          turns: data,
+        })
+      );
+    });
+  }, [dispatch]);
+
   const handleChange = (date) => {
     dispatch(
       setTime({
@@ -109,6 +120,7 @@ const Home = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     dispatch(
       setTurn({
         email: user.email,
@@ -142,6 +154,9 @@ const Home = () => {
       <button onClick={handleLogout}>Log out</button>
       <div className="calendar-container">
         <Calendar
+          tileDisabled={({ date }) =>
+            date.getDay() === 0 || date.getDay() === 6
+          }
           onChange={cambiarFechaSelecionada}
           value={date}
           locale={"es-ES"}
@@ -153,7 +168,29 @@ const Home = () => {
           return (
             <div key={horario.id}>
               <button
-                className="btn"
+                disabled={
+                  reserved.find((turno) => {
+                    return (
+                      turno.fecha === date.toISOString() &&
+                      turno.hora === horario.title
+                    );
+                  })
+                    ? true
+                    : false
+                }
+                className={
+                  time === horario.title
+                    ? "btn btn-primary"
+                    : "btn btn-outline-primary" &&
+                      reserved.find((turno) => {
+                        return (
+                          turno.fecha === date.toISOString() &&
+                          turno.hora === horario.title
+                        );
+                      })
+                    ? "btn btn-danger"
+                    : "btn btn-outline-primary"
+                }
                 value={horario.title}
                 onClick={handleChange}
               >
@@ -166,7 +203,18 @@ const Home = () => {
         <p>Horario: {time}</p>
       </div>
       <form onSubmit={handleSubmit}>
-        <button type="submit">RESERVAR TURNO </button>
+        <button
+          disabled={
+            reserved.find((turno) => {
+              return turno.fecha === date.toISOString() && turno.hora === time;
+            })
+              ? true
+              : false
+          }
+          className="btn btn-success"
+        >
+          Reservar turno
+        </button>
       </form>
     </>
   );
