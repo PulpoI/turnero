@@ -33,7 +33,7 @@ export default function Register() {
 
   const onSubmit = () => {
     const teamID = !values.teamID ? uuidv4() : values.teamID;
-    fetch(`https:${API_ENDPOINT}auth/register`, {
+    fetch(`http://localhost:5000/users`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

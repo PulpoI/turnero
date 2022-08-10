@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { setUser } from "../feactures/users/usersSlice";
 import { useNavigate } from "react-router-dom";
 
-export const Index = () => {
+const Login = () => {
   const emailField = useRef(null);
   const passwordField = useRef(null);
 
@@ -19,11 +19,9 @@ export const Index = () => {
       const userToLog = users.find(
         (user) => user.email === emailField.current.value
       );
-
-      console.log(userToLog);
       if (userToLog) {
+        localStorage.setItem("email", userToLog.email);
         if (userToLog.phone === passwordField.current.value) {
-          console.log("logged in");
           dispatch(
             setUser({
               email: userToLog.email,
@@ -31,15 +29,21 @@ export const Index = () => {
               token: Date.now(),
             })
           );
-          navigate("/home");
+          localStorage.setItem("phone", userToLog.phone);
+          localStorage.setItem("token", Date.now());
+          navigate("/home", { replace: true });
+        } else {
+          alert("Contraseña incorrecta");
         }
+      } else {
+        alert("Usuario no encontrado");
       }
     });
   };
 
   return (
     <div className="row justify-content-center">
-      <div className="col-6">
+      <div className="cols">
         <h2 className="mb-4">LOGIN FORM</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
@@ -62,3 +66,5 @@ export const Index = () => {
     </div>
   );
 };
+
+export default Login;

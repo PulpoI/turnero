@@ -50,3 +50,7 @@ label {
 .MuiInput-underline::before {
 	/* border-bottom: none !important; */
 }
+
+.btn {
+	transition: 0.5s!important;
+}

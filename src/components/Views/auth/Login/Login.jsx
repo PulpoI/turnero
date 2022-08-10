@@ -8,8 +8,6 @@ import { swal } from "../../../../utils/swal";
 
 // import "../Auth.styles.css";
 
-const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
-
 export default function Login() {
   const navigate = useNavigate();
 
@@ -30,7 +28,7 @@ export default function Login() {
   const onSubmit = () => {
     const { userName, password } = values;
 
-    fetch(`https:${API_ENDPOINT}auth/login`, {
+    fetch(`http://localhost:5000/users`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
