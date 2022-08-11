@@ -15,6 +15,7 @@ import { setReserved } from "../feactures/turns/turnsReserved";
 import "react-calendar/dist/Calendar.css";
 import "./Home.css";
 import { ButtonTime } from "../components/ButtonTime/ButtonTime";
+
 const Home = () => {
   const user = useSelector((state) => state.users);
   const date = useSelector((state) => state.date.date);
@@ -97,8 +98,11 @@ const Home = () => {
       .catch((error) => {
         console.log(error);
       });
-    navigate("/turnos");
+    navigate("/turns");
   };
+
+  // set time for today
+  const minDate = new Date().setHours(0, 0, 0, 0);
 
   return (
     <div className=" container-fluid">
@@ -107,7 +111,7 @@ const Home = () => {
       <button onClick={handleLogout}>Log out</button>
       <div className="calendar-container row justify-content-center">
         <Calendar
-          minDate={new Date()}
+          minDate={new Date(minDate)}
           minDetail="month"
           tileDisabled={({ date }) =>
             date.getDay() === 0 || date.getDay() === 6
