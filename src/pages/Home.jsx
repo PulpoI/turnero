@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Axios from "axios";
 //Components
 import { Calendar } from "react-calendar";
+import { ButtonTime } from "../components/ButtonTime/ButtonTime";
 // Utils
-import { useFechaElegida, turnoMañana, turnoTarde } from "../utils/Data";
+import { turnoMañana, turnoTarde, minDate, actualHours } from "../utils/Data";
 //Redux slices
 import { setUser, unsetUser } from "../feactures/users/usersSlice";
 import { setTurn } from "../feactures/turns/turnsSlice";
@@ -14,7 +15,7 @@ import { setReserved } from "../feactures/turns/turnsReserved";
 // Styles
 import "react-calendar/dist/Calendar.css";
 import "./Home.css";
-import { ButtonTime } from "../components/ButtonTime/ButtonTime";
+import { useFechaElegida } from "../hooks/useFechaElegida";
 
 const Home = () => {
   const user = useSelector((state) => state.users);
@@ -76,33 +77,41 @@ const Home = () => {
   //setTurn and Reserve turn
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(
-      setTurn({
-        email: user.email,
-        phone: user.phone,
-        fecha: date,
-        hora: time,
-        disponible: false,
-      })
-    );
-    Axios.post("http://localhost:5000/turnos", {
-      email: user.email,
-      phone: user.phone,
-      fecha: date,
-      hora: time,
-      disponible: false,
-    })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    navigate("/turns");
+    if (time === "") {
+      alert("Seleccione una hora");
+    } else {
+      if (
+        reserved
+          .map((turn) => {
+            return turn.fecha === date && turn.hora === time;
+          })
+          .includes(true)
+      ) {
+        alert("Ya hay un turno reservado para esa fecha y hora");
+      } else {
+        dispatch(
+          setTurn({
+            email: user.email,
+            phone: user.phone,
+            fecha: date,
+            hora: time,
+            disponible: false,
+          })
+        );
+        Axios.post("http://localhost:5000/turnos", {
+          email: user.email,
+          phone: user.phone,
+          fecha: date,
+          hora: time,
+          disponible: false,
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+        navigate("/turns");
+      }
+    }
   };
-
-  // set time for today
-  const minDate = new Date().setHours(0, 0, 0, 0);
 
   return (
     <div className=" container-fluid">
@@ -139,7 +148,7 @@ const Home = () => {
         <div className="d-flex flex-wrap d-flex justify-content-between">
           {turnoTarde.map((horario) => {
             return (
-              <div key={horario.id} className="col">
+              <div key={horario.id}>
                 <ButtonTime horario={horario} handleTime={handleTime} />
               </div>
             );
@@ -154,7 +163,11 @@ const Home = () => {
           disabled={
             reserved.find((turno) => {
               return turno.fecha === date.toISOString() && turno.hora === time;
-            })
+            }) ||
+            time === "" ||
+            (actualHours > time &&
+              date.toLocaleDateString("en-GB") ===
+                new Date(minDate).toLocaleDateString("en-GB")) & true
               ? true
               : false
           }
@@ -163,6 +176,15 @@ const Home = () => {
           Reservar turno
         </button>
       </form>
+      {actualHours > time &&
+      time !== "" &&
+      (date.toLocaleDateString("en-GB") ===
+        new Date(minDate).toLocaleDateString("en-GB")) &
+        true ? (
+        <p className="text-danger text-center">
+          No puedes reservar un turno en el pasado, elige otro horario.
+        </p>
+      ) : null}
     </div>
   );
 };

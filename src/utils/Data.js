@@ -24,17 +24,9 @@ export const dias_semana = [
   "Sábado",
 ];
 
-export function useFechaElegida(date) {
-  return (
-    dias_semana[date.getDay()] +
-    ", " +
-    date.getDate() +
-    " de " +
-    meses[date.getMonth()] +
-    " de " +
-    date.getUTCFullYear()
-  );
-}
+// set time for today
+export const minDate = new Date().setHours(0, 0, 0, 0);
+export const actualHours = `${new Date().getHours()}:${new Date().getMinutes()}`;
 
 export const turnos = [
   {

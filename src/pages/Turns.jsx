@@ -3,7 +3,6 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setReserved } from "../feactures/turns/turnsReserved";
 import { setUser } from "../feactures/users/usersSlice";
-import { useFechaElegida } from "../utils/Data";
 
 const Turns = () => {
   const reserved = useSelector((state) => state.turnsReserved.turns);
@@ -34,8 +33,17 @@ const Turns = () => {
     });
   }, [dispatch]);
 
+  //turns filtered for user
   const reservedTurns = reserved.filter((turn) => turn.email === user.email);
+  //turns organized for time and date
+  const reservedOrganizedTime = reservedTurns
+    .slice()
+    .sort((a, b) => a.hora.replace(/:/g, "") - b.hora.replace(/:/g, ""));
+  const reservedOrganized = reservedOrganizedTime
+    .slice()
+    .sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
 
+  //function to cancel turn
   const cancelTurn = (id) => {
     Axios.delete(`http://localhost:5000/turnos/${id}`)
       .then((response) => {
@@ -57,15 +65,13 @@ const Turns = () => {
   return (
     <div className="">
       <h1 className="text-center pb-3">Mis turnos</h1>
-      {/* <p>{useFechaElegida(reservedTurns[0].fecha)}</p> */}
       <div className="turns">
-        {reservedTurns.map((turn) => (
+        {reservedOrganized.map((turn) => (
           <div key={turn.id} className="d-flex justify-content-center p-3">
             <h5 className="p-2">
               {new Date(turn.fecha).toLocaleDateString("en-GB")} a las{" "}
               {turn.hora}
             </h5>
-
             <button
               className="btn btn-danger"
               onClick={() => cancelTurn(turn.id)}

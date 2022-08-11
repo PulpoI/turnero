@@ -1,7 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const minDate = new Date().setHours(0, 0, 0, 0);
+
 const initialState = {
-  date: new Date(),
+  date: new Date(minDate),
   hora: "",
 };
 

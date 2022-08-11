@@ -1,10 +1,12 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { actualHours, minDate } from "../../utils/Data";
 
 export const ButtonTime = ({ horario, handleTime }) => {
   const date = useSelector((state) => state.date.date);
   const time = useSelector((state) => state.date.hora);
   const reserved = useSelector((state) => state.turnsReserved.turns);
+
   return (
     <button
       disabled={
@@ -13,6 +15,10 @@ export const ButtonTime = ({ horario, handleTime }) => {
             turno.fecha === date.toISOString() && turno.hora === horario.title
           );
         })
+          ? true
+          : false ||
+            (actualHours > horario.title && true) &
+              (date.toISOString() === new Date(minDate).toISOString())
           ? true
           : false
       }
