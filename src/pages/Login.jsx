@@ -30,6 +30,7 @@ const Login = () => {
             })
           );
           localStorage.setItem("phone", userToLog.phone);
+          localStorage.setItem("fullName", userToLog.fullName);
           localStorage.setItem("token", Date.now());
           navigate("/home", { replace: true });
         } else {
@@ -43,7 +44,7 @@ const Login = () => {
 
   return (
     <div className="row justify-content-center">
-      <div className="cols">
+      <div className="">
         <h2 className="mb-4">LOGIN FORM</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">

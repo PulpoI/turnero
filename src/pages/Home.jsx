@@ -26,15 +26,6 @@ const Home = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // Logout and remove local storage
-  const handleLogout = () => {
-    dispatch(unsetUser());
-    localStorage.removeItem("email");
-    localStorage.removeItem("phone");
-    localStorage.removeItem("token");
-    navigate("/");
-  };
-
   //set localstorage
   useEffect(() => {
     dispatch(
@@ -42,6 +33,7 @@ const Home = () => {
         email: localStorage.getItem("email"),
         phone: localStorage.getItem("phone"),
         token: localStorage.getItem("token"),
+        fullName: localStorage.getItem("fullName"),
       })
     );
   }, [dispatch]);
@@ -104,8 +96,7 @@ const Home = () => {
           fecha: date,
           hora: time,
           disponible: false,
-        })
-        .catch((error) => {
+        }).catch((error) => {
           console.log(error);
         });
         navigate("/turns");
@@ -115,9 +106,8 @@ const Home = () => {
 
   return (
     <div className=" container-fluid">
-      <h2>Home</h2>
-      <p>Welcome {user.email}</p>
-      <button onClick={handleLogout}>Log out</button>
+      <h2>Turnero</h2>
+      <p>Bienvenido {user.email}!</p>
       <div className="calendar-container row justify-content-center">
         <Calendar
           minDate={new Date(minDate)}
