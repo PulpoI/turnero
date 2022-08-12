@@ -6,10 +6,12 @@ export const ButtonTime = ({ horario, handleTime }) => {
   const date = useSelector((state) => state.date.date);
   const time = useSelector((state) => state.date.hora);
   const reserved = useSelector((state) => state.turnsReserved.turns);
+  const admin = useSelector((state) => state.admin.isAdmin);
 
   return (
     <button
       disabled={
+        !admin &&
         reserved.find((turno) => {
           return (
             turno.fecha === date.toISOString() && turno.hora === horario.title
@@ -24,7 +26,7 @@ export const ButtonTime = ({ horario, handleTime }) => {
       }
       className={
         time === horario.title
-          ? "btn btn-primary mt-2"
+          ? "btn btn-secondary mt-2"
           : "btn btn-outline-primary mt-2" &&
             reserved.find((turno) => {
               return (

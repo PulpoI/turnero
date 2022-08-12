@@ -1,66 +1,115 @@
 import Axios from "axios";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setUser } from "../feactures/users/usersSlice";
 import { useNavigate } from "react-router-dom";
+import { Switch, FormControlLabel } from "@mui/material";
+import { admin } from "../utils/Data";
+import { setAdmin } from "../feactures/admin/adminSlice";
+import { SetLoginStorage } from "../hooks/SetLoginStorage";
 
 const Login = () => {
+  const [switchValue, setSwitchValue] = useState(false);
+
+  const adminField = useRef(null);
   const emailField = useRef(null);
   const passwordField = useRef(null);
 
   const navigate = useNavigate();
-
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    Axios.get("http://localhost:5000/users").then((response) => {
-      const users = response.data;
-      const userToLog = users.find(
-        (user) => user.email === emailField.current.value
+    switchValue ? adminLogin() : userLogin();
+  };
+
+  const userLogin = async () => {
+    const { data } = await Axios.get("http://localhost:5000/users");
+    const user = data.find(
+      (user) =>
+        user.email === emailField.current.value &&
+        user.phone === passwordField.current.value
+    );
+    if (user) {
+      dispatch(
+        setUser({
+          email: user.email,
+          phone: user.phone,
+          token: new Date(),
+          fullName: user.fullName,
+        })
       );
-      if (userToLog) {
-        localStorage.setItem("email", userToLog.email);
-        if (userToLog.phone === passwordField.current.value) {
-          dispatch(
-            setUser({
-              email: userToLog.email,
-              phone: userToLog.phone,
-              token: Date.now(),
-            })
-          );
-          localStorage.setItem("phone", userToLog.phone);
-          localStorage.setItem("fullName", userToLog.fullName);
-          localStorage.setItem("token", Date.now());
-          navigate("/home", { replace: true });
-        } else {
-          alert("Contraseña incorrecta");
-        }
-      } else {
-        alert("Usuario no encontrado");
-      }
-    });
+      SetLoginStorage(user);
+      navigate("/");
+    } else {
+      alert("Invalid credentials");
+    }
+  };
+
+  const adminLogin = async () => {
+    const { data } = await Axios.get("http://localhost:5000/admins");
+    const admin = data.find(
+      (admin) =>
+        admin.email === emailField.current.value &&
+        admin.phone === passwordField.current.value &&
+        admin.credential === adminField.current.value
+    );
+    if (admin) {
+      dispatch(setUser(admin));
+      dispatch(
+        setAdmin({
+          isAdmin: true,
+        })
+      );
+      SetLoginStorage(admin);
+      localStorage.setItem("isAdmin", true);
+      navigate("/");
+    } else {
+      alert("Invalid credentials");
+    }
   };
 
   return (
-    <div className="row justify-content-center">
+    <div className="justify-content-center">
       <div className="">
-        <h2 className="mb-4">LOGIN FORM</h2>
+        <h2 className="mb-4">Inicia sesión o crea una cuenta nueva</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
-            <label className="form-label">Email address</label>
+            <label className="form-label">Email o Usuario</label>
             <input type="email" className="form-control" ref={emailField} />
           </div>
           <div className="mb-3">
-            <label className="form-label">Password</label>
+            <label className="form-label">Teléfono</label>
             <input
               type="password"
               className="form-control"
               ref={passwordField}
             />
           </div>
+          <FormControlLabel
+            control={
+              <Switch
+                value={switchValue}
+                onChange={() => setSwitchValue(!switchValue)}
+                name="switch"
+                color="secondary"
+              />
+            }
+            label="¿Sos administrador?"
+            className="block mb-2 text-sm text-gray-600 dark:text-gray-200"
+          />
+
+          {switchValue && (
+            <div>
+              <label className="block mb-2 text-sm text-gray-600 dark:text-gray-200">
+                Por favor, introduce tu credencial
+              </label>
+              <input type="text" ref={adminField} />
+            </div>
+          )}
+
           <button type="submit" className="btn btn-primary">
-            Submit
+            Iniciar sesión
           </button>
         </form>
       </div>

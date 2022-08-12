@@ -31,7 +31,6 @@ if (actualHours.length === 4 || actualHours.length === 3) {
   actualHours = `0${actualHours}`;
 }
 
-console.log(actualHours);
 export const turnoMañana = [
   {
     id: 1,
@@ -100,3 +99,5 @@ export const turnoTarde = [
     title: "17:30",
   },
 ];
+
+export const admin = "admin";

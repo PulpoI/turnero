@@ -15,6 +15,8 @@ export const NavBar = () => {
     localStorage.removeItem("email");
     localStorage.removeItem("phone");
     localStorage.removeItem("token");
+    localStorage.removeItem("fullName");
+    localStorage.removeItem("isAdmin");
     navigate("/");
   };
   return (
@@ -37,7 +39,7 @@ export const NavBar = () => {
         <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <Link to="/home" className="nav-link active">
+              <Link to="/" className="nav-link active">
                 {/* <a className="nav-link active" aria-current="page" href="#"> */}
                 Turnero
                 {/* </a> */}

@@ -5,6 +5,7 @@ import turnsReducer from "../feactures/turns/turnsSlice";
 import usersReducer from "../feactures/users/usersSlice";
 import dateReducer from "../feactures/date/dateSlice";
 import turnsReserved from "../feactures/turns/turnsReserved";
+import adminReducer from "../feactures/admin/adminSlice";
 
 export default configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export default configureStore({
     turns: turnsReducer,
     date: dateReducer,
     turnsReserved: turnsReserved,
+    admin: adminReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

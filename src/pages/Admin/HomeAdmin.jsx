@@ -4,26 +4,31 @@ import { useNavigate } from "react-router-dom";
 import Axios from "axios";
 //Components
 import { Calendar } from "react-calendar";
-import { ButtonTime } from "../components/ButtonTime/ButtonTime";
+import { ButtonTime } from "../../components/ButtonTime/ButtonTime";
 // Utils
-import { turnoMañana, turnoTarde, minDate, actualHours } from "../utils/Data";
+import {
+  turnoMañana,
+  turnoTarde,
+  minDate,
+  actualHours,
+} from "../../utils/Data";
 //Redux slices
-import { setUser, unsetUser } from "../feactures/users/usersSlice";
-import { setTurn } from "../feactures/turns/turnsSlice";
-import { setDate, setTime } from "../feactures/date/dateSlice";
-import { setReserved } from "../feactures/turns/turnsReserved";
+import { setUser, unsetUser } from "../../feactures/users/usersSlice";
+import { setTurn } from "../../feactures/turns/turnsSlice";
+import { setAdmin } from "../../feactures/admin/adminSlice";
+import { setDate, setTime } from "../../feactures/date/dateSlice";
+import { setReserved } from "../../feactures/turns/turnsReserved";
 // Styles
 import "react-calendar/dist/Calendar.css";
-import "./Home.css";
-import { useFechaElegida } from "../hooks/useFechaElegida";
-import { setAdmin } from "../feactures/admin/adminSlice";
+import ".././Home.css";
+import { useFechaElegida } from "../../hooks/useFechaElegida";
 
 const Home = () => {
   const user = useSelector((state) => state.users);
   const date = useSelector((state) => state.date.date);
   const time = useSelector((state) => state.date.hora);
   const reserved = useSelector((state) => state.turnsReserved.turns);
-
+  const dateIso = date.toISOString();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -59,6 +64,13 @@ const Home = () => {
         hora: date.target.value,
       })
     );
+
+    const turno = reserved.find((turno) => {
+      return turno.fecha === dateIso && turno.hora === date.target.value;
+    });
+    if (turno) {
+      alert(`Turno reservado por ${turno.email}. Tel: ${turno.phone}`);
+    }
   };
   //setDate
   const handleDate = (date) => {
@@ -108,7 +120,7 @@ const Home = () => {
 
   return (
     <div className=" container-fluid">
-      <h2>Turnero</h2>
+      <h2>Turnero ADMIN</h2>
       <p>Bienvenido {user.email}!</p>
       <div className="calendar-container row justify-content-center">
         <Calendar
