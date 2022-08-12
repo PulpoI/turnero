@@ -2,7 +2,7 @@ import Axios from "axios";
 import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setUser } from "../feactures/users/usersSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Switch, FormControlLabel } from "@mui/material";
 import { admin } from "../utils/Data";
 import { setAdmin } from "../feactures/admin/adminSlice";
@@ -112,6 +112,17 @@ const Login = () => {
             Iniciar sesión
           </button>
         </form>
+        <p className="mt-6 text-sm text-center text-gray-400">
+          No tenes una cuenta?{" "}
+          <Link
+            to="/register"
+            href="#"
+            className="text-blue-500 focus:outline-none focus:underline hover:underline"
+          >
+            Registrate
+          </Link>
+          .
+        </p>
       </div>
     </div>
   );

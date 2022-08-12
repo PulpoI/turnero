@@ -89,6 +89,7 @@ const Home = () => {
             phone: user.phone,
             fecha: date,
             hora: time,
+            fullName: user.fullName,
             disponible: false,
           })
         );
@@ -98,6 +99,7 @@ const Home = () => {
           fecha: date,
           hora: time,
           disponible: false,
+          fullName: user.fullName,
         }).catch((error) => {
           console.log(error);
         });
@@ -109,7 +111,7 @@ const Home = () => {
   return (
     <div className=" container-fluid">
       <h2>Turnero</h2>
-      <p>Bienvenido {user.email}!</p>
+      <p>Bienvenido {user.fullName}!</p>
       <div className="calendar-container row justify-content-center">
         <Calendar
           minDate={new Date(minDate)}

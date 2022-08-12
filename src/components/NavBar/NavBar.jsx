@@ -47,9 +47,9 @@ export const NavBar = () => {
             </li>
             <li className="nav-item">
               <Link to="/turns">
-                <a className="nav-link" href="#">
+                <span className="nav-link" href="#">
                   Mis turnos
-                </a>
+                </span>
               </Link>
             </li>
           </ul>

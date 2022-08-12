@@ -26,7 +26,7 @@ export const ButtonTime = ({ horario, handleTime }) => {
       }
       className={
         time === horario.title
-          ? "btn btn-secondary mt-2"
+          ? "btn btn-primary mt-2"
           : "btn btn-outline-primary mt-2" &&
             reserved.find((turno) => {
               return (

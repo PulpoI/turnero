@@ -2,7 +2,7 @@ import Axios from "axios";
 import { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { setUser } from "../feactures/users/usersSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const emailField = useRef(null);
@@ -43,30 +43,13 @@ const Login = () => {
                 token: Date.now(),
               })
             );
-            navigate("/home", { replace: true });
+            navigate("/", { replace: true });
           })
           .catch((error) => {
             console.log(error);
           });
       }
     });
-
-    // Axios.post("http://localhost:5000/users", {
-    //   email: emailField.current.value,
-    //   phone: passwordField.current.value,
-    //   fullName: fullNameField.current.value,
-    //   id: new Date().getTime(),
-    // }).then((response) => {
-    //   const data = response.data;
-    //   dispatch(
-    //     setUser({
-    //       email: emailField.current.value,
-    //       phone: passwordField.current.value,
-    //       token: fullNameField.current.value,
-    //     })
-    //   );
-    //   navigate("/home");
-    // });
   };
 
   return (
@@ -94,6 +77,17 @@ const Login = () => {
             Registrarme
           </button>
         </form>
+        <p className="mt-6 text-sm text-center text-gray-400">
+          Tenes una cuenta?{" "}
+          <Link
+            to="/login"
+            href="#"
+            className="text-blue-500 focus:outline-none focus:underline hover:underline"
+          >
+            Iniciar sesión
+          </Link>
+          .
+        </p>
       </div>
     </div>
   );

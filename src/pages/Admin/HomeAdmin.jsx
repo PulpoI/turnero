@@ -22,6 +22,8 @@ import { setReserved } from "../../feactures/turns/turnsReserved";
 import "react-calendar/dist/Calendar.css";
 import ".././Home.css";
 import { useFechaElegida } from "../../hooks/useFechaElegida";
+import swal from "sweetalert2";
+import Modal from "../../components/Modal/Modal";
 
 const Home = () => {
   const user = useSelector((state) => state.users);
@@ -69,7 +71,8 @@ const Home = () => {
       return turno.fecha === dateIso && turno.hora === date.target.value;
     });
     if (turno) {
-      alert(`Turno reservado por ${turno.email}. Tel: ${turno.phone}`);
+      console.log("turno");
+      // alert(`Turno reservado por ${turno.email}. Tel: ${turno.phone}`);
     }
   };
   //setDate
@@ -153,7 +156,37 @@ const Home = () => {
           {turnoTarde.map((horario) => {
             return (
               <div key={horario.id}>
-                <ButtonTime horario={horario} handleTime={handleTime} />
+                <Modal
+                  horario={horario}
+                  handleTime={handleTime}
+                  fullName={
+                    reserved.length > 0 &&
+                    reserved.find((turno) => {
+                      return turno.fecha === dateIso && turno.hora === time;
+                    }) &&
+                    reserved.find((turno) => {
+                      return turno.fecha === dateIso && turno.hora === time;
+                    }).fullName
+                  }
+                  email={
+                    reserved.length > 0 &&
+                    reserved.find((turno) => {
+                      return turno.fecha === dateIso && turno.hora === time;
+                    }) &&
+                    reserved.find((turno) => {
+                      return turno.fecha === dateIso && turno.hora === time;
+                    }).email
+                  }
+                  phone={
+                    reserved.find((turno) => {
+                      return turno.fecha === dateIso && turno.hora === time;
+                    }) &&
+                    reserved.find((turno) => {
+                      return turno.fecha === dateIso && turno.hora === time;
+                    }).phone
+                  }
+                />
+                {/* <ButtonTime horario={horario} handleTime={handleTime} /> */}
               </div>
             );
           })}

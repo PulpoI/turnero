@@ -9,24 +9,6 @@
   ],
   "users": [
     {
-      "id": "1",
-      "email": "pablo@gmail.com",
-      "phone": "2352407827"
-    },
-    {
-      "id": "2",
-      "email": "pedro@gmail.com",
-      "phone": "2352407827"
-    },
-    {
-      "id": "3",
-      "email": "challenge@alkemy.org",
-      "phone": "react"
-    },
-    {
-      "id": "cbeLHtG"
-    },
-    {
       "email": "pablo1@gmail.com",
       "phone": "2352407827",
       "fullName": "plablo durt",
@@ -85,200 +67,38 @@
       "phone": "2352407827",
       "fullName": "asdad",
       "id": 1660318154255
+    },
+    {
+      "email": "pablo@gmail.comm",
+      "phone": "2352407827",
+      "fullName": "Pablo Duarte",
+      "id": 1660342259473
+    },
+    {
+      "email": "pablo@gmail.com",
+      "phone": "2352407827",
+      "fullName": "Pablo Duarte",
+      "id": 1660344653964
     }
   ],
   "turnos": [
     {
       "email": "pablo@gmail.com",
       "phone": "2352407827",
-      "fecha": "2022-08-12T03:00:00.000Z",
+      "fecha": "2022-08-15T03:00:00.000Z",
       "hora": "16:00",
       "disponible": false,
-      "id": 9
-    },
-    {
-      "email": "challenge@alkemy.org",
-      "phone": "react",
-      "fecha": "2022-08-17T03:00:00.000Z",
-      "hora": "14:30",
-      "disponible": false,
-      "id": 16
+      "fullName": "Pablo Duarte",
+      "id": 1
     },
     {
       "email": "pablo@gmail.com",
       "phone": "2352407827",
-      "fecha": "2022-08-12T03:00:00.000Z",
-      "hora": "10:00",
-      "disponible": false,
-      "id": 17
-    },
-    {
-      "email": "pablo@gmail.com",
-      "phone": "2352407827",
-      "fecha": "2022-08-12T03:00:00.000Z",
-      "hora": "11:00",
-      "disponible": false,
-      "id": 18
-    },
-    {
-      "email": "pablo@gmail.com",
-      "phone": "2352407827",
-      "fecha": "2022-08-12T03:00:00.000Z",
-      "hora": "11:30",
-      "disponible": false,
-      "id": 19
-    },
-    {
-      "email": "challenge@alkemy.org",
-      "phone": "react",
-      "fecha": "2022-08-17T03:00:00.000Z",
-      "hora": "10:30",
-      "disponible": false,
-      "id": 23
-    },
-    {
-      "email": "challenge@alkemy.org",
-      "phone": "react",
-      "fecha": "2022-08-17T03:00:00.000Z",
-      "hora": "17:00",
-      "disponible": false,
-      "id": 24
-    },
-    {
-      "email": "challenge@alkemy.org",
-      "phone": "react",
-      "fecha": "2022-08-18T03:00:00.000Z",
-      "hora": "16:00",
-      "disponible": false,
-      "id": 25
-    },
-    {
-      "email": "challenge@alkemy.org",
-      "phone": "react",
       "fecha": "2022-08-15T03:00:00.000Z",
       "hora": "09:30",
       "disponible": false,
-      "id": 26
-    },
-    {
-      "email": "challenge@alkemy.org",
-      "phone": "react",
-      "fecha": "2022-08-26T03:00:00.000Z",
-      "hora": "16:00",
-      "disponible": false,
-      "id": 28
-    },
-    {
-      "email": "challenge@alkemy.org",
-      "phone": "react",
-      "fecha": "2022-08-15T03:00:00.000Z",
-      "hora": "09:00",
-      "disponible": false,
-      "id": 29
-    },
-    {
-      "email": "pablo2@gmail.com",
-      "phone": "2352407827",
-      "fecha": "2022-08-12T03:00:00.000Z",
-      "hora": "08:00",
-      "disponible": false,
-      "id": 30
-    },
-    {
-      "email": "pablo9@gmail.com",
-      "phone": "2352407827",
-      "fecha": "2022-08-12T03:00:00.000Z",
-      "hora": "08:30",
-      "disponible": false,
-      "id": 31
-    },
-    {
-      "email": "pablo@gmail.com10",
-      "phone": "2352407827",
-      "fecha": "2022-08-12T03:00:00.000Z",
-      "hora": "15:00",
-      "disponible": false,
-      "id": 32
-    },
-    {
-      "email": "pablo@gmail.com10",
-      "phone": "2352407827",
-      "fecha": "2022-08-17T03:00:00.000Z",
-      "hora": "09:00",
-      "disponible": false,
-      "id": 33
-    },
-    {
-      "email": "pablo@gmail.com",
-      "phone": "2352407827",
-      "fecha": "2022-08-12T03:00:00.000Z",
-      "hora": "09:00",
-      "disponible": false,
-      "id": 34
-    },
-    {
-      "email": "pablo@gmail.com",
-      "phone": "2352407827",
-      "fecha": "2022-08-12T03:00:00.000Z",
-      "hora": "15:30",
-      "disponible": false,
-      "id": 35
-    },
-    {
-      "email": "pablo@gmail.com",
-      "phone": "2352407827",
-      "fecha": "2022-08-17T03:00:00.000Z",
-      "hora": "10:00",
-      "disponible": false,
-      "id": 36
-    },
-    {
-      "email": "pablo2@gmail.com",
-      "phone": "2352407827",
-      "fecha": "2022-08-12T03:00:00.000Z",
-      "hora": "10:30",
-      "disponible": false,
-      "id": 37
-    },
-    {
-      "email": "pablo2@gmail.com",
-      "phone": "2352407827",
-      "fecha": "2022-08-15T03:00:00.000Z",
-      "hora": "16:00",
-      "disponible": false,
-      "id": 38
-    },
-    {
-      "email": "pablo2@gmail.com",
-      "phone": "2352407827",
-      "fecha": "2022-08-15T03:00:00.000Z",
-      "hora": "14:30",
-      "disponible": false,
-      "id": 39
-    },
-    {
-      "email": "pablo@gmail.com",
-      "phone": "2352407827",
-      "fecha": "2022-08-12T03:00:00.000Z",
-      "hora": "16:30",
-      "disponible": false,
-      "id": 40
-    },
-    {
-      "email": "pablo22@gmail.com",
-      "phone": "2352407827",
-      "fecha": "2022-08-24T03:00:00.000Z",
-      "hora": "09:30",
-      "disponible": false,
-      "id": 41
-    },
-    {
-      "email": "challenge@alkemy.org",
-      "phone": "react",
-      "fecha": "2022-08-25T03:00:00.000Z",
-      "hora": "10:30",
-      "disponible": false,
-      "id": 42
+      "fullName": "Pablo Duarte",
+      "id": 2
     }
   ]
 }
