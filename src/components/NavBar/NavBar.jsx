@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { unsetUser } from "../../feactures/users/usersSlice";
 
@@ -8,6 +8,8 @@ import logo from "../../assets/logo.png";
 export const NavBar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const admin = useSelector((state) => state.admin.isAdmin);
 
   // Logout and remove local storage
   const handleLogout = () => {
@@ -45,6 +47,7 @@ export const NavBar = () => {
                 {/* </a> */}
               </Link>
             </li>
+            {}
             <li className="nav-item">
               <Link to="/turns">
                 <span className="nav-link" href="#">
@@ -52,6 +55,15 @@ export const NavBar = () => {
                 </span>
               </Link>
             </li>
+            {admin && (
+              <li className="nav-item">
+                <Link to="/all-turns">
+                  <span className="nav-link" href="#">
+                    Todos los turnos
+                  </span>
+                </Link>
+              </li>
+            )}
           </ul>
           <form className="d-flex" role="search">
             <p></p>

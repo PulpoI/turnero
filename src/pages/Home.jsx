@@ -8,15 +8,15 @@ import { ButtonTime } from "../components/ButtonTime/ButtonTime";
 // Utils
 import { turnoMañana, turnoTarde, minDate, actualHours } from "../utils/Data";
 //Redux slices
-import { setUser, unsetUser } from "../feactures/users/usersSlice";
+import { setUser } from "../feactures/users/usersSlice";
 import { setTurn } from "../feactures/turns/turnsSlice";
 import { setDate, setTime } from "../feactures/date/dateSlice";
 import { setReserved } from "../feactures/turns/turnsReserved";
 // Styles
 import "react-calendar/dist/Calendar.css";
 import "./Home.css";
-import { useFechaElegida } from "../hooks/useFechaElegida";
 import { setAdmin } from "../feactures/admin/adminSlice";
+import { FechaElegida } from "../hooks/FechaElegida";
 
 const Home = () => {
   const user = useSelector((state) => state.users);
@@ -91,6 +91,7 @@ const Home = () => {
             hora: time,
             fullName: user.fullName,
             disponible: false,
+            id: reserved.length + 1,
           })
         );
         Axios.post("http://localhost:5000/turnos", {
@@ -111,7 +112,7 @@ const Home = () => {
   return (
     <div className=" container-fluid">
       <h2>Turnero</h2>
-      <p>Bienvenido {user.fullName}!</p>
+      <p>Bienvenido/a {user.fullName}!</p>
       <div className="calendar-container row justify-content-center">
         <Calendar
           minDate={new Date(minDate)}
@@ -123,7 +124,7 @@ const Home = () => {
           value={date}
           locale={"es-ES"}
         />
-        <h5 className="text-center">{useFechaElegida(date)}</h5>
+        <h5 className="text-center">{FechaElegida(date)}</h5>
       </div>
       <div className="container">
         <p className="mb-1">Turno mañana:</p>
@@ -161,7 +162,9 @@ const Home = () => {
             time === "" ||
             (actualHours > time &&
               date.toLocaleDateString("en-GB") ===
-                new Date(minDate).toLocaleDateString("en-GB")) & true
+                new Date(minDate).toLocaleDateString("en-GB")) & true ||
+            (FechaElegida(new Date(date)).split(",")[0] === "Domingo" ||
+              FechaElegida(new Date(date)).split(",")[0] === "Sábado") & true
               ? true
               : false
           }

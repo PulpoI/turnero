@@ -6,6 +6,8 @@ const initialState = {
   fecha: "",
   hora: "",
   disponible: true,
+  fullName: "",
+  id: "",
 };
 
 export const turnsSlice = createSlice({
@@ -18,6 +20,8 @@ export const turnsSlice = createSlice({
       state.fecha = action.payload.fecha;
       state.hora = action.payload.hora;
       state.disponible = action.payload.disponible;
+      state.fullName = action.payload.fullName;
+      state.id = action.payload.id;
     },
     unsetTurn: (state) => {
       state.email = "";
@@ -25,6 +29,8 @@ export const turnsSlice = createSlice({
       state.fecha = "";
       state.hora = "";
       state.disponible = true;
+      state.fullName = "";
+      state.id = "";
     },
   },
 });

@@ -59,15 +59,11 @@ const Login = () => {
         <form className="mx-5" onSubmit={handleSubmit}>
           <div className="mb-3 ">
             <label className="form-label">Email o Usuario</label>
-            <input type="email" className="form-control" ref={emailField} />
+            <input type="text" className="form-control" ref={emailField} />
           </div>
           <div className="mb-3">
             <label className="form-label">Teléfono</label>
-            <input
-              type="password"
-              className="form-control"
-              ref={passwordField}
-            />
+            <input type="number" className="form-control" ref={passwordField} />
           </div>
           <div className="mb-3">
             <label className="form-label">Nombre y apellido</label>

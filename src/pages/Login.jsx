@@ -4,7 +4,6 @@ import { useDispatch } from "react-redux";
 import { setUser } from "../feactures/users/usersSlice";
 import { Link, useNavigate } from "react-router-dom";
 import { Switch, FormControlLabel } from "@mui/material";
-import { admin } from "../utils/Data";
 import { setAdmin } from "../feactures/admin/adminSlice";
 import { SetLoginStorage } from "../hooks/SetLoginStorage";
 
@@ -76,7 +75,7 @@ const Login = () => {
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label className="form-label">Email o Usuario</label>
-            <input type="email" className="form-control" ref={emailField} />
+            <input type="text" className="form-control" ref={emailField} />
           </div>
           <div className="mb-3">
             <label className="form-label">Teléfono</label>

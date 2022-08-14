@@ -17,6 +17,7 @@ const Turns = () => {
         email: localStorage.getItem("email"),
         phone: localStorage.getItem("phone"),
         token: localStorage.getItem("token"),
+        fullName: localStorage.getItem("fullName"),
       })
     );
   }, [dispatch]);
@@ -68,10 +69,10 @@ const Turns = () => {
       <div className="turns">
         {reservedOrganized.map((turn) => (
           <div key={turn.id} className="d-flex justify-content-center p-3">
-            <h5 className="p-2">
+            <div className="p-2">
               {new Date(turn.fecha).toLocaleDateString("en-GB")} a las{" "}
               {turn.hora}
-            </h5>
+            </div>
             <button
               className="btn btn-danger"
               onClick={() => cancelTurn(turn.id)}
