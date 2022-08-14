@@ -5,11 +5,34 @@ import { setReserved } from "../../feactures/turns/turnsReserved";
 import { setUser } from "../../feactures/users/usersSlice";
 import { setAdmin } from "../../feactures/admin/adminSlice";
 import { FechaElegida } from "../../hooks/FechaElegida";
+//Firebase
+import {
+  collection,
+  getDocs,
+  getDoc,
+  deleteDoc,
+  doc,
+} from "@firebase/firestore";
+import { db } from "../../firebase/firebase";
 
 const Turns = () => {
   const reserved = useSelector((state) => state.turnsReserved.turns);
+  const reservedCollection = collection(db, "turnos");
 
   const dispatch = useDispatch();
+
+  const getTurns = async () => {
+    const data = await getDocs(reservedCollection);
+    dispatch(
+      setReserved({
+        turns: data.docs.map((doc) => ({ ...doc.data(), id: doc.id })),
+      })
+    );
+  };
+
+  useEffect(() => {
+    getTurns();
+  }, []);
 
   //set localstorage
   useEffect(() => {
@@ -24,16 +47,16 @@ const Turns = () => {
   }, [dispatch]);
 
   //Load turns reserved
-  useEffect(() => {
-    Axios.get("http://localhost:5000/turnos").then((response) => {
-      const data = response.data;
-      dispatch(
-        setReserved({
-          turns: data,
-        })
-      );
-    });
-  }, [dispatch]);
+  // useEffect(() => {
+  //   Axios.get("http://localhost:5000/turnos").then((response) => {
+  //     const data = response.data;
+  // dispatch(
+  //   setReserved({
+  //     turns: data,
+  //   })
+  // );
+  //   });
+  // }, [dispatch]);
 
   //turns organized for time and date
   const organizeTurns = (turns) => {
@@ -55,22 +78,28 @@ const Turns = () => {
   const organizedTurns = organizeTurns(reserved);
 
   //function to cancel turn
-  const cancelTurn = (id) => {
-    Axios.delete(`http://localhost:5000/turnos/${id}`)
-      .then((response) => {
-        const data = response.data;
-        dispatch(
-          setReserved({
-            turns: data,
-          })
-        );
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
-        window.location.reload();
-      });
+  // const cancelTurn = (id) => {
+  //   Axios.delete(`http://localhost:5000/turnos/${id}`)
+  //     .then((response) => {
+  //       const data = response.data;
+  //       dispatch(
+  //         setReserved({
+  //           turns: data,
+  //         })
+  //       );
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     })
+  //     .finally(() => {
+  //       window.location.reload();
+  //     });
+  // };
+
+  const cancelTurn = async (id) => {
+    const turnDoc = doc(db, "turnos", id);
+    await deleteDoc(turnDoc);
+    getTurns();
   };
 
   return (
@@ -89,7 +118,7 @@ const Turns = () => {
             </tr>
           </thead>
           <tbody>
-            {organizedTurns.map((turn) => (
+            {reserved.map((turn) => (
               <tr key={turn.id}>
                 <td>
                   {new Date(turn.fecha).toLocaleDateString("en-GB")} (

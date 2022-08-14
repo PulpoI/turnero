@@ -13,6 +13,14 @@ import { setTurn, unsetTurn } from "../../feactures/turns/turnsSlice";
 import { setAdmin } from "../../feactures/admin/adminSlice";
 import { setDate, setTime } from "../../feactures/date/dateSlice";
 import { setReserved } from "../../feactures/turns/turnsReserved";
+//Firebase
+import {
+  collection,
+  getDocs,
+  getDoc,
+  deleteDoc,
+} from "../../firebase/firebase";
+import { db } from "../../firebase/firebase";
 // Styles
 import "react-calendar/dist/Calendar.css";
 import ".././Home.css";

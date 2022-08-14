@@ -5,6 +5,16 @@ import { setTurn } from "../../feactures/turns/turnsSlice";
 import { FechaElegida } from "../../hooks/FechaElegida";
 import { actualHours, minDate } from "../../utils/Data";
 import { setReserved } from "../../feactures/turns/turnsReserved";
+//Firestore
+import {
+  collection,
+  addDoc,
+  getDocs,
+  getDoc,
+  deleteDoc,
+} from "@firebase/firestore";
+import { db } from "../../firebase/firebase";
+import { useNavigate } from "react-router-dom";
 
 const Modal = ({ horario, handleTime, fullName, email, phone }) => {
   const date = useSelector((state) => state.date.date);
@@ -13,50 +23,67 @@ const Modal = ({ horario, handleTime, fullName, email, phone }) => {
   const admin = useSelector((state) => state.admin.isAdmin);
   const user = useSelector((state) => state.users);
 
+  const navigate = useNavigate();
+
   const dispatch = useDispatch();
 
-  //setTurn and Reserve turn
-  const handleSubmit = (e) => {
+  const turnsCollection = collection(db, "turnos");
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (time === "") {
-      alert("Seleccione una hora");
-    } else {
-      if (
-        reserved
-          .map((turn) => {
-            return turn.fecha === date && turn.hora === time;
-          })
-          .includes(true)
-      ) {
-        alert("Ya hay un turno reservado para esa fecha y hora");
-      } else {
-        dispatch(
-          setTurn({
-            email: user.email,
-            phone: user.phone,
-            fecha: date,
-            hora: time,
-            disponible: false,
-            fullName: "admin",
-          })
-        );
-        Axios.post("http://localhost:5000/turnos", {
-          email: user.email,
-          phone: user.phone,
-          fecha: date,
-          hora: time,
-          disponible: false,
-          fullName: "admin",
-        })
-          .catch((error) => {
-            console.log(error);
-          })
-          .finally(() => {
-            window.location.reload();
-          });
-      }
-    }
+    await addDoc(turnsCollection, {
+      email: user.email,
+      phone: user.phone,
+      fecha: date.toISOString(),
+      hora: time,
+      disponible: false,
+      fullName: "admin",
+    });
+    navigate("/");
   };
+
+  //setTurn and Reserve turn
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   if (time === "") {
+  //     alert("Seleccione una hora");
+  //   } else {
+  //     if (
+  //       reserved
+  //         .map((turn) => {
+  //           return turn.fecha === date && turn.hora === time;
+  //         })
+  //         .includes(true)
+  //     ) {
+  //       alert("Ya hay un turno reservado para esa fecha y hora");
+  //     } else {
+  //       dispatch(
+  //         setTurn({
+  //           email: user.email,
+  //           phone: user.phone,
+  //           fecha: date,
+  //           hora: time,
+  //           disponible: false,
+  //           fullName: "admin",
+  //         })
+  //       );
+  //       Axios.post("http://localhost:5000/turnos", {
+  //         email: user.email,
+  //         phone: user.phone,
+  //         fecha: date,
+  //         hora: time,
+  //         disponible: false,
+  //         fullName: "admin",
+  //       })
+  //         .catch((error) => {
+  //           console.log(error);
+  //         })
+  //         .finally(() => {
+  //           window.location.reload();
+  //         });
+  //     }
+  //   }
+  // };
 
   //function to cancel turn
   const cancelTurn = (id) => {

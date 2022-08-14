@@ -95,15 +95,6 @@
   ],
   "turnos": [
     {
-      "email": "challenge@alkemy.org",
-      "phone": "react",
-      "fecha": "2022-08-16T03:00:00.000Z",
-      "hora": "15:00",
-      "disponible": false,
-      "fullName": "Alkemy challenge",
-      "id": 6
-    },
-    {
       "email": "pablo@gmail.com",
       "phone": "2352407827",
       "fecha": "2022-08-31T03:00:00.000Z",
@@ -151,24 +142,6 @@
     {
       "email": "admin@admin.com",
       "phone": "admin",
-      "fecha": "2022-08-16T03:00:00.000Z",
-      "hora": "16:30",
-      "disponible": false,
-      "fullName": "admin",
-      "id": 37
-    },
-    {
-      "email": "admin@admin.com",
-      "phone": "admin",
-      "fecha": "2022-08-19T03:00:00.000Z",
-      "hora": "09:30",
-      "disponible": false,
-      "fullName": "admin",
-      "id": 40
-    },
-    {
-      "email": "admin@admin.com",
-      "phone": "admin",
       "fecha": "2022-08-25T03:00:00.000Z",
       "hora": "16:00",
       "disponible": false,
@@ -183,15 +156,6 @@
       "disponible": false,
       "fullName": "Camila Gonzalez",
       "id": 45
-    },
-    {
-      "email": "admin@admin.com",
-      "phone": "admin",
-      "fecha": "2022-08-18T03:00:00.000Z",
-      "hora": "10:00",
-      "disponible": false,
-      "fullName": "admin",
-      "id": 22
     },
     {
       "email": "admin@admin.com",
@@ -212,13 +176,67 @@
       "id": 24
     },
     {
+      "email": "pablo@gmail.com",
+      "phone": "2352407827",
+      "fecha": "2022-08-16T03:00:00.000Z",
+      "hora": "15:30",
+      "disponible": false,
+      "fullName": "Pablo Duarte",
+      "id": 46
+    },
+    {
+      "email": "pablo@gmail.com",
+      "phone": "2352407827",
+      "fecha": "2022-08-16T03:00:00.000Z",
+      "hora": "16:00",
+      "disponible": false,
+      "fullName": "Pablo Duarte",
+      "id": 47
+    },
+    {
+      "email": "pablo@gmail.com",
+      "phone": "2352407827",
+      "fecha": "2022-08-16T03:00:00.000Z",
+      "hora": "16:30",
+      "disponible": false,
+      "fullName": "Pablo Duarte",
+      "id": 48
+    },
+    {
+      "email": "admin@admin.com",
+      "phone": "admin",
+      "fecha": "2022-08-17T03:00:00.000Z",
+      "hora": "10:00",
+      "disponible": false,
+      "fullName": "admin",
+      "id": 49
+    },
+    {
       "email": "admin@admin.com",
       "phone": "admin",
       "fecha": "2022-08-16T03:00:00.000Z",
-      "hora": "10:30",
+      "hora": "09:30",
       "disponible": false,
       "fullName": "admin",
-      "id": 46
+      "id": 50
+    },
+    {
+      "email": "admin@admin.com",
+      "phone": "admin",
+      "fecha": "2022-08-16T03:00:00.000Z",
+      "hora": "10:00",
+      "disponible": false,
+      "fullName": "admin",
+      "id": 51
+    },
+    {
+      "email": "admin@admin.com",
+      "phone": "admin",
+      "fecha": "2022-08-17T03:00:00.000Z",
+      "hora": "17:00",
+      "disponible": false,
+      "fullName": "admin",
+      "id": 52
     }
   ]
 }
