@@ -24,7 +24,6 @@ import { db } from "../../firebase/firebase";
 import "react-calendar/dist/Calendar.css";
 import ".././Home.css";
 import { useNavigate } from "react-router-dom";
-import swal from "sweetalert2";
 import Swal from "sweetalert2";
 
 const Home = () => {
@@ -74,6 +73,7 @@ const Home = () => {
           fullName: turno.fullName,
           fecha: dateIso,
           hora: date.target.value,
+          id: turno.id,
         })
       );
     } else {
@@ -170,6 +170,7 @@ const Home = () => {
                       phone={turn.phone}
                       cancelTurn={cancelTurn}
                       handleSubmit={handleSubmit}
+                      turnId={turn.id}
                     />
                   </div>
                 );
@@ -190,6 +191,7 @@ const Home = () => {
                       phone={turn.phone}
                       cancelTurn={cancelTurn}
                       handleSubmit={handleSubmit}
+                      turnId={turn.id}
                     />
                   </div>
                 );

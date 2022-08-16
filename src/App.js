@@ -1,7 +1,5 @@
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
-
 import { NavBar } from "./components/NavBar/NavBar";
-
 import Home from "./pages/Home";
 import HomeAdmin from "./pages/Admin/HomeAdmin";
 import AllTurns from "./pages/Admin/AllTurns";
@@ -13,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { setUser } from "./feactures/users/usersSlice";
 import { setAdmin } from "./feactures/admin/adminSlice";
+import EditTurn from "./pages/Admin/EditTurn";
 
 function App() {
   const admin = useSelector((state) => state.admin.isAdmin);
@@ -85,6 +84,14 @@ function App() {
             <RequireAdmin>
               {" "}
               <AllTurns />{" "}
+            </RequireAdmin>
+          }
+        />
+        <Route
+          path="edit/:id"
+          element={
+            <RequireAdmin>
+              <EditTurn />
             </RequireAdmin>
           }
         />

@@ -1,16 +1,8 @@
-import Axios from "axios";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setReserved } from "../feactures/turns/turnsReserved";
-import { setUser } from "../feactures/users/usersSlice";
 //Firebase
-import {
-  collection,
-  getDocs,
-  doc,
-  deleteDoc,
-  addDoc,
-} from "@firebase/firestore";
+import { collection, getDocs, doc, deleteDoc } from "@firebase/firestore";
 import { db } from "../firebase/firebase";
 
 const Turns = () => {

@@ -1,4 +1,3 @@
-import Axios from "axios";
 import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setUser } from "../feactures/users/usersSlice";
@@ -6,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Switch, FormControlLabel } from "@mui/material";
 import { setAdmin } from "../feactures/admin/adminSlice";
 import { SetLoginStorage } from "../hooks/SetLoginStorage";
-import { collection, getDocs, deleteDoc, doc } from "@firebase/firestore";
+import { collection, getDocs } from "@firebase/firestore";
 import { db } from "../firebase/firebase";
 
 const Login = () => {

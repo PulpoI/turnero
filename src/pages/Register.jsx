@@ -1,16 +1,6 @@
-import Axios from "axios";
 import { useRef } from "react";
-import { useDispatch } from "react-redux";
-import { setUser } from "../feactures/users/usersSlice";
 import { Link, useNavigate } from "react-router-dom";
-import { SetLoginStorage } from "../hooks/SetLoginStorage";
-import {
-  collection,
-  getDocs,
-  deleteDoc,
-  doc,
-  addDoc,
-} from "@firebase/firestore";
+import { collection, getDocs, addDoc } from "@firebase/firestore";
 import { db } from "../firebase/firebase";
 
 const Register = () => {

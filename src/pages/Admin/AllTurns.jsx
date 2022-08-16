@@ -1,4 +1,3 @@
-import Axios from "axios";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setReserved } from "../../feactures/turns/turnsReserved";
@@ -8,18 +7,25 @@ import { FechaElegida } from "../../hooks/FechaElegida";
 //Firebase
 import { collection, getDocs, deleteDoc, doc } from "@firebase/firestore";
 import { db } from "../../firebase/firebase";
+import { Link } from "react-router-dom";
 
 const Turns = () => {
+  const date = useSelector((state) => state.date.date);
   const reserved = useSelector((state) => state.turnsReserved.turns);
   const reservedCollection = collection(db, "turnos");
+  const dateIso = date.toISOString();
 
   const dispatch = useDispatch();
 
   const getTurns = async () => {
     const data = await getDocs(reservedCollection);
+    //filter data passing the date
+    const filterData = data.docs.filter((doc) => {
+      return doc.data().fecha >= dateIso;
+    });
     dispatch(
       setReserved({
-        turns: data.docs.map((doc) => ({ ...doc.data(), id: doc.id })),
+        turns: filterData.map((doc) => ({ ...doc.data(), id: doc.id })),
       })
     );
   };
@@ -99,6 +105,11 @@ const Turns = () => {
                   >
                     Cancelar
                   </button>
+                  {turn.email === "admin@admin.com" ? (
+                    <Link to={`/edit/${turn.id}`}>
+                      <button className="btn btn-success">Editar</button>
+                    </Link>
+                  ) : null}
                 </td>
               </tr>
             ))}

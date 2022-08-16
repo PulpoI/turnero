@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { FechaElegida } from "../../hooks/FechaElegida";
 import { actualHours, minDate } from "../../utils/Data";
 
@@ -10,6 +11,7 @@ const Modal = ({
   phone,
   cancelTurn,
   handleSubmit,
+  turnId,
 }) => {
   const date = useSelector((state) => state.date.date);
   const time = useSelector((state) => state.date.hora);
@@ -93,6 +95,13 @@ const Modal = ({
               >
                 Cerrar
               </button>
+              {email === "admin@admin.com" ? (
+                <Link to={`/edit/${turnId}`}>
+                  <button className="btn btn-success" data-bs-dismiss="modal">
+                    Editar
+                  </button>
+                </Link>
+              ) : null}
               {fullName && email && phone ? (
                 <button
                   type="button"

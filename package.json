@@ -35,6 +35,7 @@
     "web-vitals": "^2.1.0",
     "yup": "^0.32.11"
   },
+  "homepage": "http://turnero.pulpol.com.ar/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import Axios from "axios";
 //Components
 import { Calendar } from "react-calendar";
 import { ButtonTime } from "../components/ButtonTime/ButtonTime";
@@ -9,18 +8,10 @@ import { ButtonTime } from "../components/ButtonTime/ButtonTime";
 import { turnoMañana, turnoTarde, minDate, actualHours } from "../utils/Data";
 import { FechaElegida } from "../hooks/FechaElegida";
 //Redux slices
-import { setUser } from "../feactures/users/usersSlice";
-import { setTurn } from "../feactures/turns/turnsSlice";
 import { setDate, setTime } from "../feactures/date/dateSlice";
 import { setReserved } from "../feactures/turns/turnsReserved";
 //Firebase
-import {
-  collection,
-  getDocs,
-  doc,
-  deleteDoc,
-  addDoc,
-} from "@firebase/firestore";
+import { collection, getDocs, addDoc } from "@firebase/firestore";
 import { db } from "../firebase/firebase";
 // Styles
 import "react-calendar/dist/Calendar.css";
