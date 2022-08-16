@@ -9,10 +9,27 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Turns from "./pages/Turns";
 import "./App.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { setUser } from "./feactures/users/usersSlice";
+import { setAdmin } from "./feactures/admin/adminSlice";
 
 function App() {
   const admin = useSelector((state) => state.admin.isAdmin);
+  const dispatch = useDispatch();
+
+  //set localstorage
+  useEffect(() => {
+    dispatch(
+      setUser({
+        email: localStorage.getItem("email"),
+        phone: localStorage.getItem("phone"),
+        token: localStorage.getItem("token"),
+        fullName: localStorage.getItem("fullName"),
+      })
+    );
+    dispatch(setAdmin({ isAdmin: localStorage.getItem("isAdmin") }));
+  }, [dispatch]);
 
   const RequireAuth = ({ children }) => {
     if (

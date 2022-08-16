@@ -6,13 +6,7 @@ import { setUser } from "../../feactures/users/usersSlice";
 import { setAdmin } from "../../feactures/admin/adminSlice";
 import { FechaElegida } from "../../hooks/FechaElegida";
 //Firebase
-import {
-  collection,
-  getDocs,
-  getDoc,
-  deleteDoc,
-  doc,
-} from "@firebase/firestore";
+import { collection, getDocs, deleteDoc, doc } from "@firebase/firestore";
 import { db } from "../../firebase/firebase";
 
 const Turns = () => {
@@ -46,18 +40,6 @@ const Turns = () => {
     dispatch(setAdmin({ isAdmin: localStorage.getItem("isAdmin") }));
   }, [dispatch]);
 
-  //Load turns reserved
-  // useEffect(() => {
-  //   Axios.get("http://localhost:5000/turnos").then((response) => {
-  //     const data = response.data;
-  // dispatch(
-  //   setReserved({
-  //     turns: data,
-  //   })
-  // );
-  //   });
-  // }, [dispatch]);
-
   //turns organized for time and date
   const organizeTurns = (turns) => {
     const organized = [];
@@ -76,25 +58,6 @@ const Turns = () => {
   };
 
   const organizedTurns = organizeTurns(reserved);
-
-  //function to cancel turn
-  // const cancelTurn = (id) => {
-  //   Axios.delete(`http://localhost:5000/turnos/${id}`)
-  //     .then((response) => {
-  //       const data = response.data;
-  //       dispatch(
-  //         setReserved({
-  //           turns: data,
-  //         })
-  //       );
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     })
-  //     .finally(() => {
-  //       window.location.reload();
-  //     });
-  // };
 
   const cancelTurn = async (id) => {
     const turnDoc = doc(db, "turnos", id);
@@ -118,7 +81,7 @@ const Turns = () => {
             </tr>
           </thead>
           <tbody>
-            {reserved.map((turn) => (
+            {organizedTurns.map((turn) => (
               <tr key={turn.id}>
                 <td>
                   {new Date(turn.fecha).toLocaleDateString("en-GB")} (

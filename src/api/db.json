@@ -237,6 +237,24 @@
       "disponible": false,
       "fullName": "admin",
       "id": 52
+    },
+    {
+      "email": "challenge@alkemy.org",
+      "phone": "react",
+      "fecha": "2022-08-15T03:00:00.000Z",
+      "hora": "09:30",
+      "disponible": false,
+      "fullName": "Alkemy challenge",
+      "id": 53
+    },
+    {
+      "email": "camilagon",
+      "phone": "2352505048",
+      "fecha": "2022-08-16T03:00:00.000Z",
+      "hora": "09:00",
+      "disponible": false,
+      "fullName": "Camila Gonzalez",
+      "id": 54
     }
   ]
 }

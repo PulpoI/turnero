@@ -7,16 +7,24 @@ import { Calendar } from "react-calendar";
 import { ButtonTime } from "../components/ButtonTime/ButtonTime";
 // Utils
 import { turnoMañana, turnoTarde, minDate, actualHours } from "../utils/Data";
+import { FechaElegida } from "../hooks/FechaElegida";
 //Redux slices
 import { setUser } from "../feactures/users/usersSlice";
 import { setTurn } from "../feactures/turns/turnsSlice";
 import { setDate, setTime } from "../feactures/date/dateSlice";
 import { setReserved } from "../feactures/turns/turnsReserved";
+//Firebase
+import {
+  collection,
+  getDocs,
+  doc,
+  deleteDoc,
+  addDoc,
+} from "@firebase/firestore";
+import { db } from "../firebase/firebase";
 // Styles
 import "react-calendar/dist/Calendar.css";
 import "./Home.css";
-import { setAdmin } from "../feactures/admin/adminSlice";
-import { FechaElegida } from "../hooks/FechaElegida";
 
 const Home = () => {
   const user = useSelector((state) => state.users);
@@ -27,30 +35,21 @@ const Home = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  //set localstorage
-  useEffect(() => {
+  const reservedCollection = collection(db, "turnos");
+  const turnsCollection = collection(db, "turnos");
+
+  const getTurns = async () => {
+    const data = await getDocs(reservedCollection);
     dispatch(
-      setUser({
-        email: localStorage.getItem("email"),
-        phone: localStorage.getItem("phone"),
-        token: localStorage.getItem("token"),
-        fullName: localStorage.getItem("fullName"),
+      setReserved({
+        turns: data.docs.map((doc) => ({ ...doc.data(), id: doc.id })),
       })
     );
-    dispatch(setAdmin({ isAdmin: localStorage.getItem("isAdmin") }));
-  }, [dispatch]);
+  };
 
-  //Load turns reserved
   useEffect(() => {
-    Axios.get("http://localhost:5000/turnos").then((response) => {
-      const data = response.data;
-      dispatch(
-        setReserved({
-          turns: data,
-        })
-      );
-    });
-  }, [dispatch]);
+    getTurns();
+  }, []);
 
   //setTime
   const handleTime = (date) => {
@@ -68,8 +67,9 @@ const Home = () => {
       })
     );
   };
-  //setTurn and Reserve turn
-  const handleSubmit = (e) => {
+
+  //Reserve turn
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (time === "") {
       alert("Seleccione una hora");
@@ -83,26 +83,13 @@ const Home = () => {
       ) {
         alert("Ya hay un turno reservado para esa fecha y hora");
       } else {
-        dispatch(
-          setTurn({
-            email: user.email,
-            phone: user.phone,
-            fecha: date,
-            hora: time,
-            fullName: user.fullName,
-            disponible: false,
-            id: reserved.length + 1,
-          })
-        );
-        Axios.post("http://localhost:5000/turnos", {
+        await addDoc(turnsCollection, {
           email: user.email,
           phone: user.phone,
-          fecha: date,
+          fecha: date.toISOString(),
           hora: time,
           disponible: false,
           fullName: user.fullName,
-        }).catch((error) => {
-          console.log(error);
         });
         navigate("/turns");
       }

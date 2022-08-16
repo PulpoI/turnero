@@ -6,9 +6,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { Switch, FormControlLabel } from "@mui/material";
 import { setAdmin } from "../feactures/admin/adminSlice";
 import { SetLoginStorage } from "../hooks/SetLoginStorage";
+import { collection, getDocs, deleteDoc, doc } from "@firebase/firestore";
+import { db } from "../firebase/firebase";
 
 const Login = () => {
   const [switchValue, setSwitchValue] = useState(false);
+
+  const adminCollection = collection(db, "admins");
+  const userCollection = collection(db, "users");
 
   const adminField = useRef(null);
   const emailField = useRef(null);
@@ -23,22 +28,22 @@ const Login = () => {
   };
 
   const userLogin = async () => {
-    const { data } = await Axios.get("http://localhost:5000/users");
-    const user = data.find(
+    const data = await getDocs(userCollection);
+    const user = data.docs.find(
       (user) =>
-        user.email === emailField.current.value &&
-        user.phone === passwordField.current.value
+        user.data().email === emailField.current.value &&
+        user.data().phone === passwordField.current.value
     );
     if (user) {
       dispatch(
         setUser({
-          email: user.email,
-          phone: user.phone,
+          email: user.data().email,
+          phone: user.data().phone,
           token: new Date(),
-          fullName: user.fullName,
+          fullName: user.data().fullName,
         })
       );
-      SetLoginStorage(user);
+      SetLoginStorage(user.data());
       navigate("/");
     } else {
       alert("Invalid credentials");
@@ -46,21 +51,18 @@ const Login = () => {
   };
 
   const adminLogin = async () => {
-    const { data } = await Axios.get("http://localhost:5000/admins");
-    const admin = data.find(
+    const data = await getDocs(adminCollection);
+
+    const admin = data.docs.find(
       (admin) =>
-        admin.email === emailField.current.value &&
-        admin.phone === passwordField.current.value &&
-        admin.credential === adminField.current.value
+        admin.data().email === emailField.current.value &&
+        admin.data().phone === passwordField.current.value &&
+        admin.data().credential === adminField.current.value
     );
     if (admin) {
-      dispatch(setUser(admin));
-      dispatch(
-        setAdmin({
-          isAdmin: true,
-        })
-      );
-      SetLoginStorage(admin);
+      dispatch(setUser(admin.data()));
+      dispatch(setAdmin({ isAdmin: true }));
+      SetLoginStorage(admin.data());
       localStorage.setItem("isAdmin", true);
       navigate("/");
     } else {

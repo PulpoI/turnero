@@ -3,6 +3,15 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setReserved } from "../feactures/turns/turnsReserved";
 import { setUser } from "../feactures/users/usersSlice";
+//Firebase
+import {
+  collection,
+  getDocs,
+  doc,
+  deleteDoc,
+  addDoc,
+} from "@firebase/firestore";
+import { db } from "../firebase/firebase";
 
 const Turns = () => {
   const reserved = useSelector((state) => state.turnsReserved.turns);
@@ -10,29 +19,21 @@ const Turns = () => {
 
   const dispatch = useDispatch();
 
-  //set localstorage
-  useEffect(() => {
-    dispatch(
-      setUser({
-        email: localStorage.getItem("email"),
-        phone: localStorage.getItem("phone"),
-        token: localStorage.getItem("token"),
-        fullName: localStorage.getItem("fullName"),
-      })
-    );
-  }, [dispatch]);
+  const reservedCollection = collection(db, "turnos");
 
   //Load turns reserved
+  const getTurns = async () => {
+    const data = await getDocs(reservedCollection);
+    dispatch(
+      setReserved({
+        turns: data.docs.map((doc) => ({ ...doc.data(), id: doc.id })),
+      })
+    );
+  };
+
   useEffect(() => {
-    Axios.get("http://localhost:5000/turnos").then((response) => {
-      const data = response.data;
-      dispatch(
-        setReserved({
-          turns: data,
-        })
-      );
-    });
-  }, [dispatch]);
+    getTurns();
+  }, []);
 
   //turns filtered for user
   const reservedTurns = reserved.filter((turn) => turn.email === user.email);
@@ -45,22 +46,10 @@ const Turns = () => {
     .sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
 
   //function to cancel turn
-  const cancelTurn = (id) => {
-    Axios.delete(`http://localhost:5000/turnos/${id}`)
-      .then((response) => {
-        const data = response.data;
-        dispatch(
-          setReserved({
-            turns: data,
-          })
-        );
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
-        window.location.reload();
-      });
+  const cancelTurn = async (id) => {
+    const turnDoc = doc(db, "turnos", id);
+    await deleteDoc(turnDoc);
+    getTurns();
   };
 
   return (
