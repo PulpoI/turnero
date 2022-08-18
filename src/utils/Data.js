@@ -26,10 +26,17 @@ export const dias_semana = [
 
 // set time for today
 export const minDate = new Date().setHours(0, 0, 0, 0);
-export let actualHours = `${new Date().getHours()}:${new Date().getMinutes()}`;
-if (actualHours.length === 4 || actualHours.length === 3) {
-  actualHours = `0${actualHours}`;
+
+// set time for today
+let hours = new Date().getHours();
+let minutes = new Date().getMinutes();
+if (hours < 10) {
+  hours = "0" + hours;
 }
+if (minutes < 10) {
+  minutes = "0" + minutes;
+}
+export let actualHours = `${hours}:${minutes}`;
 
 export const turnoMañana = [
   {

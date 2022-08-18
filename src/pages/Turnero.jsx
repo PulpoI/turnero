@@ -25,7 +25,6 @@ const Turnero = () => {
   const time = useSelector((state) => state.date.hora);
   const reserved = useSelector((state) => state.turnsReserved.turns);
   const [loading, setLoading] = useState(false);
-  console.log(loading);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
