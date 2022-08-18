@@ -26,16 +26,16 @@ export const ButtonTime = ({ horario, handleTime }) => {
       }
       className={
         time === horario.title
-          ? "btn btn-primary mt-2"
-          : "btn btn-outline-primary mt-2" &&
+          ? "btn btn-dark mt-2 px-5 py-3"
+          : "btn btn-outline-dark mt-2 px-5 py-3" &&
             reserved.find((turno) => {
               return (
                 turno.fecha === date.toISOString() &&
                 turno.hora === horario.title
               );
             })
-          ? "btn btn-danger  mt-2"
-          : "btn btn-outline-primary  mt-2"
+          ? "btn btn-danger mt-2 px-5 py-3"
+          : "btn btn-outline-dark  mt-2 px-5 py-3"
       }
       value={horario.title}
       onClick={handleTime}

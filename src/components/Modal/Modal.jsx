@@ -21,6 +21,7 @@ const Modal = ({
   return (
     <>
       {/* Button trigger modal */}
+
       <button
         disabled={
           !admin &&
@@ -44,10 +45,10 @@ const Modal = ({
               turno.fecha === date.toISOString() && turno.hora === horario.title
             );
           })
-            ? "btn btn-danger  mt-2"
-            : "btn btn-outline-primary  mt-2" && time === horario.title
-            ? "btn btn-primary mt-2"
-            : "btn btn-outline-primary mt-2"
+            ? "btn btn-danger mt-2 px-5 py-3"
+            : "btn btn-outline-dark mt-2 px-5 py-3" && time === horario.title
+            ? "btn btn-dark mt-2 px-5 py-3"
+            : "btn btn-outline-dark mt-2 px-5 py-3"
         }
         value={horario.title}
         data-bs-toggle="modal"
@@ -90,14 +91,14 @@ const Modal = ({
             <div className="modal-footer">
               <button
                 type="button"
-                className="btn btn-secondary"
+                className="btn btn-outline-dark"
                 data-bs-dismiss="modal"
               >
                 Cerrar
               </button>
               {email === "admin@admin.com" ? (
-                <Link to={`/edit/${turnId}`}>
-                  <button className="btn btn-success" data-bs-dismiss="modal">
+                <Link to={`/editar-turno/${turnId}`}>
+                  <button className="btn btn-warning" data-bs-dismiss="modal">
                     Editar
                   </button>
                 </Link>
@@ -129,7 +130,7 @@ const Modal = ({
                         FechaElegida(new Date(date)).split(",")[0] ===
                           "Sábado") & true
                     }
-                    className="btn btn-success"
+                    className="btn btn-dark"
                     data-bs-dismiss="modal"
                     type="submit"
                   >

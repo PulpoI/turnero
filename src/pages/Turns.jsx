@@ -4,6 +4,9 @@ import { setReserved } from "../feactures/turns/turnsReserved";
 //Firebase
 import { collection, getDocs, doc, deleteDoc } from "@firebase/firestore";
 import { db } from "../firebase/firebase";
+import { Link } from "react-router-dom";
+import { FechaElegida } from "../hooks/FechaElegida";
+import BgMain from "../components/BgMain/BgMain";
 
 const Turns = () => {
   const reserved = useSelector((state) => state.turnsReserved.turns);
@@ -46,22 +49,56 @@ const Turns = () => {
 
   return (
     <div className="">
-      <h1 className="text-center pb-3">Mis turnos</h1>
-      <div className="turns">
-        {reservedOrganized.map((turn) => (
-          <div key={turn.id} className="d-flex justify-content-center p-3">
-            <div className="p-2">
-              {new Date(turn.fecha).toLocaleDateString("en-GB")} a las{" "}
-              {turn.hora}
-            </div>
-            <button
-              className="btn btn-danger"
-              onClick={() => cancelTurn(turn.id)}
-            >
-              Cancelar
-            </button>
-          </div>
-        ))}
+      <BgMain title="MIS TURNOS" />
+      <div className="table-responsive-md">
+        <table className="table table-striped table-hover ">
+          <thead>
+            <tr className="table-dark sticky-top">
+              <th scope="col">
+                {" "}
+                <span className="p-3">Fecha</span>
+              </th>
+              <th scope="col">Hora</th>
+              <th scope="col">Nombre y apellido</th>
+              <th scope="col">Teléfono</th>
+              <th scope="col">Email/Usuario</th>
+              <th scope="col">Cancelar</th>
+              <th scope="col">Editar</th>
+            </tr>
+          </thead>
+          <tbody>
+            {reservedOrganized.map((turn) => (
+              <tr key={turn.id}>
+                <td>
+                  <span className="p-3">
+                    {new Date(turn.fecha).toLocaleDateString("en-GB")} (
+                    {FechaElegida(new Date(turn.fecha)).split(",")[0]})
+                  </span>
+                </td>
+                <td className="table-info">{turn.hora}</td>
+                <td>{turn.fullName}</td>
+                <td>{turn.phone}</td>
+                <td>{turn.email}</td>
+
+                <td>
+                  {turn.email === "admin@admin.com" ? (
+                    <Link to={`/editar-turno/${turn.id}`}>
+                      <button className="btn btn-warning">Editar</button>
+                    </Link>
+                  ) : null}
+                </td>
+                <td>
+                  <button
+                    className="btn btn-danger"
+                    onClick={() => cancelTurn(turn.id)}
+                  >
+                    Cancelar
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );

@@ -43,7 +43,7 @@ const Login = () => {
         })
       );
       SetLoginStorage(user.data());
-      navigate("/");
+      navigate("/turnero");
     } else {
       alert("Invalid credentials");
     }
@@ -63,7 +63,7 @@ const Login = () => {
       dispatch(setAdmin({ isAdmin: true }));
       SetLoginStorage(admin.data());
       localStorage.setItem("isAdmin", true);
-      navigate("/");
+      navigate("/turnero");
     } else {
       alert("Invalid credentials");
     }

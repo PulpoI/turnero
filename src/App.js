@@ -12,6 +12,8 @@ import { useEffect } from "react";
 import { setUser } from "./feactures/users/usersSlice";
 import { setAdmin } from "./feactures/admin/adminSlice";
 import EditTurn from "./pages/Admin/EditTurn";
+import Turnero from "./pages/Turnero";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   const admin = useSelector((state) => state.admin.isAdmin);
@@ -51,35 +53,35 @@ function App() {
   const location = useLocation();
   return (
     <>
-      <NavBar />
+      {location.pathname !== "/" && <NavBar />}
       <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<Home />} />
+
         <Route
-          exact
-          path="/"
-          element={
-            admin ? (
-              <RequireAuth>
-                {" "}
-                <HomeAdmin />{" "}
-              </RequireAuth>
-            ) : (
-              <RequireAuth>
-                <Home />
-              </RequireAuth>
-            )
-          }
-        />
-        <Route
-          path="/turns"
+          path="/mis-turnos"
           element={
             <RequireAuth>
               <Turns />
             </RequireAuth>
           }
         />
+        <Route
+          path="/turnero"
+          element={
+            admin ? (
+              <RequireAdmin>
+                <HomeAdmin />
+              </RequireAdmin>
+            ) : (
+              <RequireAuth>
+                <Turnero />
+              </RequireAuth>
+            )
+          }
+        />
 
         <Route
-          path="/all-turns"
+          path="/todos-los-turnos"
           element={
             <RequireAdmin>
               {" "}
@@ -88,7 +90,7 @@ function App() {
           }
         />
         <Route
-          path="edit/:id"
+          path="editar-turno/:id"
           element={
             <RequireAdmin>
               <EditTurn />
@@ -99,6 +101,7 @@ function App() {
         <Route exact path="/register" element={<Register />} />
         <Route exact path="/login" element={<Login />} />
       </Routes>
+      {location.pathname !== "/" && <Footer />}
     </>
   );
 }

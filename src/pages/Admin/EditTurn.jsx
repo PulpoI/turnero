@@ -15,7 +15,7 @@ const EditTurn = () => {
     const turn = doc(db, "turnos", id);
     const data = { fullName: fullName, phone: phone };
     await updateDoc(turn, data);
-    navigate("/");
+    navigate(-1);
   };
 
   const getProductById = async (id) => {

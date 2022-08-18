@@ -1,50 +1,39 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 //Components
 import { Calendar } from "react-calendar";
-import Modal from "../../components/Modal/Modal";
+import { ButtonTime } from "../components/ButtonTime/ButtonTime";
 // Utils
-import { turnoMañana, turnoTarde, minDate } from "../../utils/Data";
-import { FechaElegida } from "../../hooks/FechaElegida";
-import Loader from "../../components/Loader/Loader";
+import { turnoMañana, turnoTarde, minDate, actualHours } from "../utils/Data";
+import { FechaElegida } from "../hooks/FechaElegida";
 //Redux slices
-import { setTurn, unsetTurn } from "../../feactures/turns/turnsSlice";
-import { setDate, setTime } from "../../feactures/date/dateSlice";
-import { setReserved } from "../../feactures/turns/turnsReserved";
+import { setDate, setTime } from "../feactures/date/dateSlice";
+import { setReserved } from "../feactures/turns/turnsReserved";
 //Firebase
-import {
-  collection,
-  getDocs,
-  doc,
-  deleteDoc,
-  addDoc,
-} from "@firebase/firestore";
-import { db } from "../../firebase/firebase";
+import { collection, getDocs, addDoc } from "@firebase/firestore";
+import { db } from "../firebase/firebase";
 // Styles
 import "react-calendar/dist/Calendar.css";
-import ".././Home.css";
-import { useNavigate } from "react-router-dom";
+import "./Home.css";
+import Loader from "../components/Loader/Loader";
 import Swal from "sweetalert2";
-import BgMain from "../../components/BgMain/BgMain";
-import Footer from "../../components/Footer/Footer";
 
-const Home = () => {
+const Turnero = () => {
   const user = useSelector((state) => state.users);
   const date = useSelector((state) => state.date.date);
-  const turn = useSelector((state) => state.turns);
-  const reserved = useSelector((state) => state.turnsReserved.turns);
   const time = useSelector((state) => state.date.hora);
-  const dateIso = date.toISOString();
-
-  const turnsCollection = collection(db, "turnos");
-
+  const reserved = useSelector((state) => state.turnsReserved.turns);
   const [loading, setLoading] = useState(false);
-
+  console.log(loading);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const reservedCollection = collection(db, "turnos");
+  const turnsCollection = collection(db, "turnos");
+
   const getTurns = async () => {
-    const data = await getDocs(turnsCollection);
+    const data = await getDocs(reservedCollection);
     dispatch(
       setReserved({
         turns: data.docs.map((doc) => ({ ...doc.data(), id: doc.id })),
@@ -63,24 +52,6 @@ const Home = () => {
         hora: date.target.value,
       })
     );
-    // set turn for user
-    const turno = reserved.find((turno) => {
-      return turno.fecha === dateIso && turno.hora === date.target.value;
-    });
-    if (turno) {
-      dispatch(
-        setTurn({
-          email: turno.email,
-          phone: turno.phone,
-          fullName: turno.fullName,
-          fecha: dateIso,
-          hora: date.target.value,
-          id: turno.id,
-        })
-      );
-    } else {
-      dispatch(unsetTurn());
-    }
   };
   //setDate
   const handleDate = (date) => {
@@ -113,7 +84,7 @@ const Home = () => {
           fecha: date.toISOString(),
           hora: time,
           disponible: false,
-          fullName: "admin",
+          fullName: user.fullName,
         }).finally(() => {
           setTimeout(() => {
             setLoading(false);
@@ -127,30 +98,25 @@ const Home = () => {
               confirmButtonText: "Aceptar",
               position: "center",
             });
-          }, 800);
+          }, 1000);
         });
       }
     }
   };
-
-  const cancelTurn = async (id) => {
-    const turnDoc = doc(db, "turnos", id);
-    await deleteDoc(turnDoc);
-    getTurns();
-  };
-
   return (
-    <>
-      <div className="container-fluid p-0">
-        <BgMain title="TURNERO" />
-        {loading ? (
-          <Loader />
-        ) : (
+    <div className="d-flex justify-content-center container-fluid">
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
           <div className="container-turnero ">
-            <p className="text-center mb-1 my-4">Bienvenido {user.email}!</p>
-            <div className="container-xl my-5 ">
+            <p className="text-center mb-1 mt-4">
+              Bienvenido/a {user.fullName}! <br></br>
+              Selecciona la fecha y hora para reservar tu turno.
+            </p>
+            <div className="container-xl mt-4 ">
               <div className="row">
-                <div className="container-calendar col-md-5 border border-1 rounded">
+                <div className="container-calendar col-md-4 justify-content-center">
                   <p className="mb-1 text-center">Seleccionar fecha:</p>
                   <div className="react-calendar">
                     <Calendar
@@ -167,22 +133,16 @@ const Home = () => {
                   <p className="text-center">{FechaElegida(date)}</p>
                 </div>
 
-                <div className="d-flex col flex-wrap">
+                <div className="d-flex col flex-wrap ">
                   <div className="col-6 border border-1 rounded">
                     <p className="mb-1 text-center">Turno mañana:</p>
                     <div className="d-flex flex-wrap d-flex justify-content-evenly">
                       {turnoMañana.map((horario) => {
                         return (
                           <div key={horario.id}>
-                            <Modal
+                            <ButtonTime
                               horario={horario}
                               handleTime={handleTime}
-                              fullName={turn.fullName}
-                              email={turn.email}
-                              phone={turn.phone}
-                              cancelTurn={cancelTurn}
-                              handleSubmit={handleSubmit}
-                              turnId={turn.id}
                             />
                           </div>
                         );
@@ -191,20 +151,14 @@ const Home = () => {
                   </div>
 
                   <div className="col-6 border border-1 rounded">
-                    <p className="mb-1 text-center">Turno mañana:</p>
+                    <p className="mb-1 text-center">Turno tarde:</p>
                     <div className="d-flex flex-wrap d-flex justify-content-evenly">
                       {turnoTarde.map((horario) => {
                         return (
                           <div key={horario.id}>
-                            <Modal
+                            <ButtonTime
                               horario={horario}
                               handleTime={handleTime}
-                              fullName={turn.fullName}
-                              email={turn.email}
-                              phone={turn.phone}
-                              cancelTurn={cancelTurn}
-                              handleSubmit={handleSubmit}
-                              turnId={turn.id}
                             />
                           </div>
                         );
@@ -214,11 +168,47 @@ const Home = () => {
                 </div>
               </div>
             </div>
+
+            <form
+              onSubmit={handleSubmit}
+              className="d-flex justify-content-center mb-3 mt-3"
+            >
+              <button
+                disabled={
+                  reserved.find((turno) => {
+                    return (
+                      turno.fecha === date.toISOString() && turno.hora === time
+                    );
+                  }) ||
+                  time === "" ||
+                  (actualHours > time &&
+                    date.toLocaleDateString("en-GB") ===
+                      new Date(minDate).toLocaleDateString("en-GB")) & true ||
+                  (FechaElegida(new Date(date)).split(",")[0] === "Domingo" ||
+                    FechaElegida(new Date(date)).split(",")[0] === "Sábado") &
+                    true
+                    ? true
+                    : false
+                }
+                className="btn btn-dark btn-lg btn-block"
+              >
+                !Reservar turno!
+              </button>
+            </form>
+            {actualHours > time &&
+            time !== "" &&
+            (date.toLocaleDateString("en-GB") ===
+              new Date(minDate).toLocaleDateString("en-GB")) &
+              true ? (
+              <p className="text-danger text-center">
+                No puedes reservar un turno en el pasado, elige otro horario.
+              </p>
+            ) : null}
           </div>
-        )}
-      </div>
-    </>
+        </>
+      )}
+    </div>
   );
 };
 
-export default Home;
+export default Turnero;
