@@ -30,7 +30,6 @@ const Home = () => {
   const time = useSelector((state) => state.date.hora);
   const reserved = useSelector((state) => state.turnsReserved.turns);
   const admin = useSelector((state) => state.admin.isAdmin);
-  console.log(admin);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -116,96 +115,6 @@ const Home = () => {
             Mis turnos
           </button>
         </Link>
-        {/* <div class="card text-bg-dark">
-          <img src={bg} class="card-img img-bg" alt="..." />
-          <div class="card-img-overlay">
-        {/* <h5 class="card-title">Turnero</h5> */}
-        {/* <p class="card-text">
-              This is a wider card with supporting text below as a natural
-              lead-in to additional content. This content is a little bit
-              longer.
-            </p>
-            <p class="card-text">Last updated 3 mins ago</p> */}
-        {/* </div>
-        </div> */}
-        {/* <img src={bg} alt="bg" className="img-fluid img-bg" />
-        <img src={logo} alt="logo" className="img-logoLarge img-fluid" /> */}
-        {/* <h2>Turnero</h2>
-        <p>Bienvenido/a {user.fullName}!</p> */}
-        {/* <div className="calendar-container row justify-content-center">
-        <Calendar
-          minDate={new Date(minDate)}
-          minDetail="month"
-          tileDisabled={({ date }) =>
-            date.getDay() === 0 || date.getDay() === 6
-          }
-          onChange={handleDate}
-          value={date}
-          locale={"es-ES"}
-        />
-        <h5 className="text-center">{FechaElegida(date)}</h5>
-      </div>
-
-      <div className="d-flex flex-wrap">
-        <div className="col-6">
-          <p className="mb-1">Turno mañana:</p>
-          <div className="d-flex flex-wrap d-flex justify-content-evenly">
-            {turnoMañana.map((horario) => {
-              return (
-                <div key={horario.id} className="">
-                  <ButtonTime horario={horario} handleTime={handleTime} />
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        <div className="col-6">
-          <p className="mb-1">Turno tarde:</p>
-          <div className="d-flex flex-wrap d-flex justify-content-evenly">
-            {turnoTarde.map((horario) => {
-              return (
-                <div key={horario.id}>
-                  <ButtonTime horario={horario} handleTime={handleTime} />
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-
-      <form
-        onSubmit={handleSubmit}
-        className="d-flex justify-content-center mb-3 mt-3"
-      >
-        <button
-          disabled={
-            reserved.find((turno) => {
-              return turno.fecha === date.toISOString() && turno.hora === time;
-            }) ||
-            time === "" ||
-            (actualHours > time &&
-              date.toLocaleDateString("en-GB") ===
-                new Date(minDate).toLocaleDateString("en-GB")) & true ||
-            (FechaElegida(new Date(date)).split(",")[0] === "Domingo" ||
-              FechaElegida(new Date(date)).split(",")[0] === "Sábado") & true
-              ? true
-              : false
-          }
-          className="btn btn-success "
-        >
-          Reservar turno
-        </button>
-      </form>
-      {actualHours > time &&
-      time !== "" &&
-      (date.toLocaleDateString("en-GB") ===
-        new Date(minDate).toLocaleDateString("en-GB")) &
-        true ? (
-        <p className="text-danger text-center">
-          No puedes reservar un turno en el pasado, elige otro horario.
-        </p>
-      ) : null} */}
       </div>
     </div>
   );

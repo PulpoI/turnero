@@ -62,8 +62,11 @@ const Turns = () => {
               <th scope="col">Nombre y apellido</th>
               <th scope="col">Teléfono</th>
               <th scope="col">Email/Usuario</th>
+              {user.email === "admin@admin.com" ? (
+                <th scope="col">Editar</th>
+              ) : null}
+
               <th scope="col">Cancelar</th>
-              <th scope="col">Editar</th>
             </tr>
           </thead>
           <tbody>
@@ -80,13 +83,13 @@ const Turns = () => {
                 <td>{turn.phone}</td>
                 <td>{turn.email}</td>
 
-                <td>
-                  {turn.email === "admin@admin.com" ? (
+                {turn.email === "admin@admin.com" ? (
+                  <td>
                     <Link to={`/editar-turno/${turn.id}`}>
                       <button className="btn btn-warning">Editar</button>
                     </Link>
-                  ) : null}
-                </td>
+                  </td>
+                ) : null}
                 <td>
                   <button
                     className="btn btn-danger"

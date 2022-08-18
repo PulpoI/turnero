@@ -2,6 +2,9 @@ import { useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { collection, getDocs, addDoc } from "@firebase/firestore";
 import { db } from "../firebase/firebase";
+import { SetLoginStorage } from "../hooks/SetLoginStorage";
+import { setUser } from "../feactures/users/usersSlice";
+import { useDispatch } from "react-redux";
 
 const Register = () => {
   const userCollection = collection(db, "users");
@@ -11,6 +14,7 @@ const Register = () => {
   const fullNameField = useRef(null);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,7 +31,22 @@ const Register = () => {
         fullName: fullNameField.current.value,
         id: Date.now(),
       });
-      navigate("/", { replace: true });
+      dispatch(
+        setUser({
+          email: emailField.current.value,
+          phone: passwordField.current.value,
+          token: new Date(),
+          fullName: fullNameField.current.value,
+        })
+      );
+      SetLoginStorage({
+        email: emailField.current.value,
+        phone: passwordField.current.value,
+        token: new Date(),
+        fullName: fullNameField.current.value,
+      });
+
+      navigate("/turnero", { replace: true });
     }
   };
 

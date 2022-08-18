@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setReserved } from "../../feactures/turns/turnsReserved";
-import { setUser } from "../../feactures/users/usersSlice";
 import { setPassed } from "../../feactures/turns/turnsPassed";
 import { FechaElegida } from "../../hooks/FechaElegida";
 //Firebase
@@ -11,18 +10,20 @@ import { Link } from "react-router-dom";
 import BgMain from "../../components/BgMain/BgMain";
 
 const Turns = () => {
-  const date = useSelector((state) => state.date.date);
   const reserved = useSelector((state) => state.turnsReserved.turns);
   const reservedCollection = collection(db, "turnos");
-  const dateIso = date.toISOString();
   const datePassed = useSelector((state) => state.turnsPassed.passed);
   const dispatch = useDispatch();
 
   const getTurns = async () => {
     const data = await getDocs(reservedCollection);
     //filter data passing the date
+    const today = new Date();
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+
     const filterData = data.docs.filter((doc) => {
-      return doc.data().fecha >= dateIso;
+      return doc.data().fecha >= yesterday.toISOString();
     });
     dispatch(
       setReserved({
@@ -31,7 +32,7 @@ const Turns = () => {
     );
 
     const filterDataPassed = data.docs.filter((doc) => {
-      return doc.data().fecha < dateIso;
+      return doc.data().fecha < yesterday.toISOString();
     });
     dispatch(
       setPassed({
@@ -39,14 +40,6 @@ const Turns = () => {
       })
     );
   };
-
-  useEffect(() => {
-    getTurns();
-    if (datePassed.length > 0) {
-      cancelTurn(datePassed[0].id);
-    }
-  }, []);
-
   //turns organized for time and date
   const organizeTurns = (turns) => {
     const organized = [];
@@ -63,8 +56,14 @@ const Turns = () => {
     });
     return organized;
   };
-
   const organizedTurns = organizeTurns(reserved);
+
+  useEffect(() => {
+    getTurns();
+    if (datePassed.length > 0) {
+      cancelTurn(datePassed[0].id);
+    }
+  }, []);
 
   const cancelTurn = async (id) => {
     const turnDoc = doc(db, "turnos", id);

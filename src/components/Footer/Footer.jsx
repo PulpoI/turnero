@@ -34,7 +34,7 @@ const Footer = () => {
           </li>
           {admin && (
             <li className="nav-item">
-              <a href="#" class="nav-link px-2 text-muted">
+              <a href="#" className="nav-link px-2 text-muted">
                 Todos los turnos
               </a>
             </li>
