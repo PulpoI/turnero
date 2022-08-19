@@ -7,6 +7,9 @@ import { setAdmin } from "../feactures/admin/adminSlice";
 import { SetLoginStorage } from "../hooks/SetLoginStorage";
 import { collection, getDocs } from "@firebase/firestore";
 import { db } from "../firebase/firebase";
+import "./Login.css";
+import logo from "../assets/logo.png";
+import LeftAuth from "../components/LeftAuth/LeftAuth";
 
 const Login = () => {
   const [switchValue, setSwitchValue] = useState(false);
@@ -70,59 +73,76 @@ const Login = () => {
   };
 
   return (
-    <div className="justify-content-center">
-      <div className="">
-        <h2 className="mb-4">Inicia sesión o crea una cuenta nueva</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label className="form-label">Email o Usuario</label>
-            <input type="text" className="form-control" ref={emailField} />
-          </div>
-          <div className="mb-3">
-            <label className="form-label">Teléfono</label>
-            <input
-              type="password"
-              className="form-control"
-              ref={passwordField}
-            />
-          </div>
-          <FormControlLabel
-            control={
-              <Switch
-                value={switchValue}
-                onChange={() => setSwitchValue(!switchValue)}
-                name="switch"
-                color="secondary"
+    <div class="container-fluid ">
+      <div class="row">
+        <LeftAuth auth="Registrate" pathAuth={"/register"} />
+        <div class="col-sm-6 col-md-5 form-section">
+          <div class="login-wrapper">
+            <h2 class="login-title">Iniciá sesión</h2>
+            <form onSubmit={handleSubmit}>
+              <div class="form-group">
+                <label class="sr-only">Email / Usuario</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Email / Usuario"
+                  ref={emailField}
+                />
+              </div>
+              <div class="form-group mb-3">
+                <label class="sr-only">Teléfono</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  placeholder="Teléfono"
+                  ref={passwordField}
+                />
+              </div>
+              <FormControlLabel
+                control={
+                  <Switch
+                    value={switchValue}
+                    onChange={() => setSwitchValue(!switchValue)}
+                    name="switch"
+                    color="default"
+                  />
+                }
+                label="¿Sos administrador?"
+                className="block mb-2 text-sm text-gray-600 dark:text-gray-200"
               />
-            }
-            label="¿Sos administrador?"
-            className="block mb-2 text-sm text-gray-600 dark:text-gray-200"
-          />
 
-          {switchValue && (
-            <div>
-              <label className="block mb-2 text-sm text-gray-600 dark:text-gray-200">
-                Por favor, introduce tu credencial
-              </label>
-              <input type="text" ref={adminField} />
-            </div>
-          )}
+              {switchValue && (
+                <div>
+                  <label className="sr-only">
+                    Por favor, introduce tu credencial
+                  </label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    placeholder="Credencial"
+                    ref={adminField}
+                  />
+                </div>
+              )}
+              <div class="d-flex justify-content-between align-items-center mb-5">
+                <button class="btn btn-dark" type="submit">
+                  {" "}
+                  Iniciar sesión
+                </button>
 
-          <button type="submit" className="btn btn-primary">
-            Iniciar sesión
-          </button>
-        </form>
-        <p className="mt-6 text-sm text-center text-gray-400">
-          No tenes una cuenta?{" "}
-          <Link
-            to="/register"
-            href="#"
-            className="text-blue-500 focus:outline-none focus:underline hover:underline"
-          >
-            Registrate
-          </Link>
-          .
-        </p>
+                {/* <a href="#!" class="forgot-password-link">
+                  Password?
+                </a> */}
+              </div>
+            </form>
+            <p class="login-wrapper-footer-text">
+              No tenés cuenta?{" "}
+              <Link to="/register" class="text-reset">
+                Registrate acá
+              </Link>
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );

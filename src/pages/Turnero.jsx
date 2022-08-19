@@ -27,6 +27,9 @@ const Turnero = () => {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const dateIso = date.toISOString();
+
+  console.log(time, date, reserved);
 
   const reservedCollection = collection(db, "turnos");
   const turnsCollection = collection(db, "turnos");
@@ -67,39 +70,40 @@ const Turnero = () => {
     setLoading(true);
     if (time === "") {
       alert("Seleccione una hora");
+    }
+    if (
+      await reserved
+        .map((turn) => {
+          return turn.fecha === dateIso && turn.hora === time;
+        })
+        .includes(true)
+    ) {
+      alert("Ya hay un turno reservado para esa fecha y hora");
+      setLoading(false);
     } else {
-      if (
-        reserved
-          .map((turn) => {
-            return turn.fecha === date && turn.hora === time;
-          })
-          .includes(true)
-      ) {
-        alert("Ya hay un turno reservado para esa fecha y hora");
-      } else {
-        await addDoc(turnsCollection, {
-          email: user.email,
-          phone: user.phone,
-          fecha: date.toISOString(),
-          hora: time,
-          disponible: false,
-          fullName: user.fullName,
-        }).finally(() => {
-          setTimeout(() => {
-            setLoading(false);
-            navigate("/mis-turnos");
-            Swal.fire({
-              title: "Turno reservado!",
-              text: `Tu turno ha sido reservado el dia ${date.toLocaleDateString(
-                "en-GB"
-              )} (${FechaElegida(date).split(",")[0]}) a las ${time}hs.`,
-              icon: "success",
-              confirmButtonText: "Aceptar",
-              position: "center",
-            });
-          }, 1000);
-        });
-      }
+      await addDoc(turnsCollection, {
+        email: user.email,
+        phone: user.phone,
+        fecha: date.toISOString(),
+        hora: time,
+        disponible: false,
+        fullName: user.fullName,
+      }).finally(() => {
+        setTimeout(() => {
+          setLoading(false);
+          navigate("/mis-turnos");
+          Swal.fire({
+            title: "Turno reservado!",
+            text: `Tu turno ha sido reservado el dia ${date.toLocaleDateString(
+              "en-GB"
+            )} (${FechaElegida(date).split(",")[0]}) a las ${time}hs.`,
+            icon: "success",
+            confirmButtonText: "Aceptar",
+            position: "center",
+            cancelButtonColor: "#212529",
+          });
+        }, 1000);
+      });
     }
   };
   return (

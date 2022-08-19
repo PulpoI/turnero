@@ -53,7 +53,10 @@ function App() {
   const location = useLocation();
   return (
     <>
-      {location.pathname !== "/" && <NavBar />}
+      {location.pathname !== "/login" &&
+        location.pathname !== "/register" &&
+        location.pathname !== "/" && <NavBar />}
+      {/* {location.pathname !== "/" && <NavBar />} */}
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<Home />} />
 
@@ -101,7 +104,9 @@ function App() {
         <Route exact path="/register" element={<Register />} />
         <Route exact path="/login" element={<Login />} />
       </Routes>
-      {location.pathname !== "/" && <Footer />}
+      {location.pathname !== "/login" &&
+        location.pathname !== "/register" &&
+        location.pathname !== "/" && <Footer />}
     </>
   );
 }

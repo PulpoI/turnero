@@ -126,6 +126,7 @@ const Home = () => {
               icon: "success",
               confirmButtonText: "Aceptar",
               position: "center",
+              cancelButtonColor: "#212529",
             });
           }, 800);
         });

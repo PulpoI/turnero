@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { unsetUser } from "../../feactures/users/usersSlice";
 
 import logo from "../../assets/logo.png";
+import { unsetAdmin } from "../../feactures/admin/adminSlice";
 
 export const NavBar = () => {
   const dispatch = useDispatch();
@@ -13,11 +14,13 @@ export const NavBar = () => {
   // Logout and remove local storage
   const handleLogout = () => {
     dispatch(unsetUser());
+    dispatch(unsetAdmin());
     localStorage.removeItem("email");
     localStorage.removeItem("phone");
     localStorage.removeItem("token");
     localStorage.removeItem("fullName");
     localStorage.removeItem("isAdmin");
+
     navigate("/login");
   };
   return (
