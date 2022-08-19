@@ -6,7 +6,6 @@ import { SetLoginStorage } from "../hooks/SetLoginStorage";
 import { setUser } from "../feactures/users/usersSlice";
 import { useDispatch } from "react-redux";
 import LeftAuth from "../components/LeftAuth/LeftAuth";
-import { Switch, FormControlLabel } from "@mui/material";
 
 const Register = () => {
   const userCollection = collection(db, "users");

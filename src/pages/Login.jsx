@@ -8,7 +8,6 @@ import { SetLoginStorage } from "../hooks/SetLoginStorage";
 import { collection, getDocs } from "@firebase/firestore";
 import { db } from "../firebase/firebase";
 import "./Login.css";
-import logo from "../assets/logo.png";
 import LeftAuth from "../components/LeftAuth/LeftAuth";
 
 const Login = () => {
@@ -73,27 +72,27 @@ const Login = () => {
   };
 
   return (
-    <div class="container-fluid ">
-      <div class="row">
+    <div className="container-fluid ">
+      <div className="row">
         <LeftAuth auth="Registrate" pathAuth={"/register"} />
-        <div class="col-sm-6 col-md-5 form-section">
-          <div class="login-wrapper">
-            <h2 class="login-title">Iniciá sesión</h2>
+        <div className="col-sm-6 col-md-5 form-section">
+          <div className="login-wrapper">
+            <h2 className="login-title">Iniciá sesión</h2>
             <form onSubmit={handleSubmit}>
-              <div class="form-group">
-                <label class="sr-only">Email / Usuario</label>
+              <div className="form-group">
+                <label className="sr-only">Email / Usuario</label>
                 <input
                   type="text"
-                  class="form-control"
+                  className="form-control"
                   placeholder="Email / Usuario"
                   ref={emailField}
                 />
               </div>
-              <div class="form-group mb-3">
-                <label class="sr-only">Teléfono</label>
+              <div className="form-group mb-3">
+                <label className="sr-only">Teléfono</label>
                 <input
                   type="password"
-                  class="form-control"
+                  className="form-control"
                   placeholder="Teléfono"
                   ref={passwordField}
                 />
@@ -118,26 +117,26 @@ const Login = () => {
                   </label>
                   <input
                     type="password"
-                    class="form-control"
+                    className="form-control"
                     placeholder="Credencial"
                     ref={adminField}
                   />
                 </div>
               )}
-              <div class="d-flex justify-content-between align-items-center mb-5">
-                <button class="btn btn-dark" type="submit">
+              <div className="d-flex justify-content-between align-items-center mb-5">
+                <button className="btn btn-dark" type="submit">
                   {" "}
                   Iniciar sesión
                 </button>
 
-                {/* <a href="#!" class="forgot-password-link">
+                {/* <a href="#!" className="forgot-password-link">
                   Password?
                 </a> */}
               </div>
             </form>
-            <p class="login-wrapper-footer-text">
+            <p className="login-wrapper-footer-text">
               No tenés cuenta?{" "}
-              <Link to="/register" class="text-reset">
+              <Link to="/register" className="text-reset">
                 Registrate acá
               </Link>
             </p>

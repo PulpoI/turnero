@@ -33,33 +33,70 @@ const EditTurn = () => {
   }, []);
 
   return (
-    <div>
-      <h2>Editar Turno</h2>
-      <form onSubmit={update}>
-        <div className="mb-3">
-          <label className="form-label">Nombre y apellido</label>
-          <input
-            type="text"
-            className="form-control"
-            value={fullName}
-            onChange={(e) => setFullName(e.target.value)}
-          />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Teléfono</label>
-          <input
-            type="number"
-            className="form-control"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-          />
-        </div>
+    <div className="col-sm-12 col-md-12 form-section">
+      <div className="login-wrapper">
+        <h2 className="login-title">Editar Turno</h2>
+        <form onSubmit={update}>
+          <div className="form-group">
+            <label className="sr-only">Email / Usuario</label>
+            <input
+              type="text"
+              className="form-control"
+              onChange={(e) => setFullName(e.target.value)}
+              value={fullName}
+            />
+          </div>
+          <div className="form-group mb-3">
+            <label className="sr-only">Teléfono</label>
+            <input
+              type="number"
+              className="form-control"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+            />
+          </div>
 
-        <button type="submit" className="btn btn-primary">
-          Actualizar
-        </button>
-      </form>
+          <div className="d-flex justify-content-between align-items-center mb-5">
+            <button className="btn btn-dark" type="submit">
+              {" "}
+              Actualizar turno
+            </button>
+
+            {/* <a href="#!" class="forgot-password-link">
+            Password?
+          </a> */}
+          </div>
+        </form>
+      </div>
     </div>
+
+    // <div>
+    //   <h2>Editar Turno</h2>
+    //   <form onSubmit={update}>
+    //     <div className="mb-3">
+    //       <label className="form-label">Nombre y apellido</label>
+    //       <input
+    //         type="text"
+    //         className="form-control"
+    //         value={fullName}
+    //         onChange={(e) => setFullName(e.target.value)}
+    //       />
+    //     </div>
+    //     <div className="mb-3">
+    //       <label className="form-label">Teléfono</label>
+    //       <input
+    //         type="number"
+    //         className="form-control"
+    //         value={phone}
+    //         onChange={(e) => setPhone(e.target.value)}
+    //       />
+    //     </div>
+
+    //     <button type="submit" className="btn btn-primary">
+    //       Actualizar
+    //     </button>
+    //   </form>
+    // </div>
   );
 };
 

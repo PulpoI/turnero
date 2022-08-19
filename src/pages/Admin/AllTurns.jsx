@@ -85,8 +85,8 @@ const Turns = () => {
               <th scope="col">Nombre y apellido</th>
               <th scope="col">Teléfono</th>
               <th scope="col">Email/Usuario</th>
-              <th scope="col">Cancelar</th>
               <th scope="col">Editar</th>
+              <th scope="col">Cancelar</th>
             </tr>
           </thead>
           <tbody>

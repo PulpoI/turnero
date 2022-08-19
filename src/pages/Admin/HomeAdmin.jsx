@@ -26,7 +26,6 @@ import ".././Home.css";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import BgMain from "../../components/BgMain/BgMain";
-import Footer from "../../components/Footer/Footer";
 
 const Home = () => {
   const user = useSelector((state) => state.users);
@@ -126,7 +125,7 @@ const Home = () => {
               icon: "success",
               confirmButtonText: "Aceptar",
               position: "center",
-              cancelButtonColor: "#212529",
+              confirmButtonColor: "#212529",
             });
           }, 800);
         });

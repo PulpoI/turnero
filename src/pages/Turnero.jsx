@@ -100,7 +100,7 @@ const Turnero = () => {
             icon: "success",
             confirmButtonText: "Aceptar",
             position: "center",
-            cancelButtonColor: "#212529",
+            confirmButtonColor: "#212529",
           });
         }, 1000);
       });
