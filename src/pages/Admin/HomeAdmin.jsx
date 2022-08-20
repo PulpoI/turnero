@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 //Components
-import { Calendar } from "react-calendar";
-import Modal from "../../components/Modal/Modal";
+import BgMain from "../../components/BgMain/BgMain";
+import CalendarSet from "../../components/CalendarSet/CalendarSet";
+import { ModalContainer } from "../../components/ModalContainer/ModalContainer";
 // Utils
-import { turnoMañana, turnoTarde, minDate } from "../../utils/Data";
+import { turnoMañana, turnoTarde } from "../../utils/Data";
 import { FechaElegida } from "../../hooks/FechaElegida";
+import IrArriba from "../../hooks/IrArriba";
 import Loader from "../../components/Loader/Loader";
 //Redux slices
 import { setTurn, unsetTurn } from "../../feactures/turns/turnsSlice";
@@ -25,7 +27,6 @@ import "react-calendar/dist/Calendar.css";
 import ".././Home.css";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import BgMain from "../../components/BgMain/BgMain";
 
 const Home = () => {
   const user = useSelector((state) => state.users);
@@ -34,6 +35,7 @@ const Home = () => {
   const reserved = useSelector((state) => state.turnsReserved.turns);
   const time = useSelector((state) => state.date.hora);
   const dateIso = date.toISOString();
+  const dateWekend = FechaElegida(date).split(",", 1).toString();
 
   const turnsCollection = collection(db, "turnos");
 
@@ -93,9 +95,13 @@ const Home = () => {
   //Reserve turn
   const handleSubmit = async (e) => {
     e.preventDefault();
+    IrArriba();
     setLoading(true);
     if (time === "") {
       alert("Seleccione una hora");
+    } else if ((dateWekend === "Sábado") | "Domingo") {
+      alert("No podes reservar turno un fin de semana. Elegí otro dia");
+      setLoading(false);
     } else {
       if (
         reserved
@@ -105,6 +111,7 @@ const Home = () => {
           .includes(true)
       ) {
         alert("Ya hay un turno reservado para esa fecha y hora");
+        setLoading(false);
       } else {
         await addDoc(turnsCollection, {
           email: user.email,
@@ -150,67 +157,24 @@ const Home = () => {
             <p className="text-center mb-1 my-4">Bienvenido {user.email}!</p>
             <div className="container-xl my-5 ">
               <div className="row">
-                <div className="container-calendar col-md-5 border border-1 rounded">
-                  <p className="mb-1 text-center">Seleccionar fecha:</p>
-                  <div className="react-calendar">
-                    <Calendar
-                      minDate={new Date(minDate)}
-                      minDetail="month"
-                      tileDisabled={({ date }) =>
-                        date.getDay() === 0 || date.getDay() === 6
-                      }
-                      onChange={handleDate}
-                      value={date}
-                      locale={"es-ES"}
-                    />
-                  </div>
-                  <p className="text-center">{FechaElegida(date)}</p>
-                </div>
-
+                <CalendarSet handleDate={handleDate} date={date} />
                 <div className="d-flex col flex-wrap">
-                  <div className="col-6 border border-1 rounded">
-                    <p className="mb-1 text-center">Turno mañana:</p>
-                    <div className="d-flex flex-wrap d-flex justify-content-evenly">
-                      {turnoMañana.map((horario) => {
-                        return (
-                          <div key={horario.id}>
-                            <Modal
-                              horario={horario}
-                              handleTime={handleTime}
-                              fullName={turn.fullName}
-                              email={turn.email}
-                              phone={turn.phone}
-                              cancelTurn={cancelTurn}
-                              handleSubmit={handleSubmit}
-                              turnId={turn.id}
-                            />
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-
-                  <div className="col-6 border border-1 rounded">
-                    <p className="mb-1 text-center">Turno mañana:</p>
-                    <div className="d-flex flex-wrap d-flex justify-content-evenly">
-                      {turnoTarde.map((horario) => {
-                        return (
-                          <div key={horario.id}>
-                            <Modal
-                              horario={horario}
-                              handleTime={handleTime}
-                              fullName={turn.fullName}
-                              email={turn.email}
-                              phone={turn.phone}
-                              cancelTurn={cancelTurn}
-                              handleSubmit={handleSubmit}
-                              turnId={turn.id}
-                            />
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
+                  <ModalContainer
+                    turnChoose={turnoMañana}
+                    handleTime={handleTime}
+                    turn={turn}
+                    cancelTurn={cancelTurn}
+                    handleSubmit={handleSubmit}
+                    turnName={"Turno mañana:"}
+                  />
+                  <ModalContainer
+                    turnChoose={turnoTarde}
+                    handleTime={handleTime}
+                    turn={turn}
+                    cancelTurn={cancelTurn}
+                    handleSubmit={handleSubmit}
+                    turnName={"Turno tarde:"}
+                  />
                 </div>
               </div>
             </div>

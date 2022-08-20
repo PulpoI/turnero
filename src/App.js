@@ -69,6 +69,14 @@ function App() {
           }
         />
         <Route
+          path="editar-turno/:id"
+          element={
+            <RequireAuth>
+              <EditTurn />
+            </RequireAuth>
+          }
+        />
+        <Route
           path="/turnero"
           element={
             admin ? (
@@ -89,14 +97,6 @@ function App() {
             <RequireAdmin>
               {" "}
               <AllTurns />{" "}
-            </RequireAdmin>
-          }
-        />
-        <Route
-          path="editar-turno/:id"
-          element={
-            <RequireAdmin>
-              <EditTurn />
             </RequireAdmin>
           }
         />

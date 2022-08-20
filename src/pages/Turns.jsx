@@ -7,6 +7,7 @@ import { db } from "../firebase/firebase";
 import { Link } from "react-router-dom";
 import { FechaElegida } from "../hooks/FechaElegida";
 import BgMain from "../components/BgMain/BgMain";
+import irArriba from "../hooks/IrArriba";
 
 const Turns = () => {
   const reserved = useSelector((state) => state.turnsReserved.turns);
@@ -62,9 +63,10 @@ const Turns = () => {
               <th scope="col">Nombre y apellido</th>
               <th scope="col">Teléfono</th>
               <th scope="col">Email/Usuario</th>
-              {user.email === "admin@admin.com" ? (
+              <th scope="col">Editar</th>
+              {/* {user.email === "admin@admin.com" ? (
                 <th scope="col">Editar</th>
-              ) : null}
+              ) : null} */}
 
               <th scope="col">Cancelar</th>
             </tr>
@@ -78,18 +80,27 @@ const Turns = () => {
                     {FechaElegida(new Date(turn.fecha)).split(",")[0]})
                   </span>
                 </td>
-                <td className="table-info">{turn.hora}</td>
+                <td className="table-secondary">{turn.hora}</td>
                 <td>{turn.fullName}</td>
                 <td>{turn.phone}</td>
                 <td>{turn.email}</td>
-
-                {turn.email === "admin@admin.com" ? (
+                <td>
+                  <Link to={`/editar-turno/${turn.id}`}>
+                    <button
+                      onClick={() => irArriba()}
+                      className="btn btn-warning"
+                    >
+                      Editar
+                    </button>
+                  </Link>
+                </td>
+                {/* {turn.email === "admin@admin.com" ? (
                   <td>
                     <Link to={`/editar-turno/${turn.id}`}>
                       <button className="btn btn-warning">Editar</button>
                     </Link>
                   </td>
-                ) : null}
+                ) : null} */}
                 <td>
                   <button
                     className="btn btn-danger"

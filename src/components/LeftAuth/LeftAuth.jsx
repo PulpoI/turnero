@@ -5,17 +5,17 @@ import logo from "../../assets/logo.png";
 
 const LeftAuth = ({ auth, pathAuth }) => {
   return (
-    <div class="col-sm-6 col-md-7 d-flex align-items-center intro-section bg-dark">
-      <div class="brand-wrapper">
+    <div className="col-sm-6 col-md-7 d-flex align-items-center intro-section bg-dark">
+      <div className="brand-wrapper">
         <h1>
           <Link to="/">
             <img src={logo} alt="logo" width={200} />
           </Link>
         </h1>
       </div>
-      <div class="intro-content-wrapper">
-        <h1 class="intro-title">Bienvenido/a al Turnero</h1>
-        <p class="intro-text">
+      <div className="intro-content-wrapper">
+        <h1 className="intro-title">Bienvenido/a al Turnero</h1>
+        <p className="intro-text">
           Saca tu turno y disfruta de una experiencia de servicio más segura y
           eficaz.
         </p>

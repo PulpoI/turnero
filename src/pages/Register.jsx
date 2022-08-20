@@ -108,40 +108,6 @@ const Register = () => {
         </div>
       </div>
     </div>
-
-    // <div className="row justify-content-center">
-    //   <div className="">
-    //     <h2 className="mb-4">REGISTER</h2>
-    //     <form className="mx-5" onSubmit={handleSubmit}>
-    //       <div className="mb-3 ">
-    //         <label className="form-label">Email o Usuario</label>
-    //         <input type="text" className="form-control" ref={emailField} />
-    //       </div>
-    //       <div className="mb-3">
-    //         <label className="form-label">Teléfono</label>
-    //         <input type="number" className="form-control" ref={passwordField} />
-    //       </div>
-    //       <div className="mb-3">
-    //         <label className="form-label">Nombre y apellido</label>
-    //         <input type="text" className="form-control" ref={fullNameField} />
-    //       </div>
-    //       <button type="submit" className="btn btn-primary">
-    //         Registrarme
-    //       </button>
-    //     </form>
-    //     <p className="mt-6 text-sm text-center text-gray-400">
-    //       Tenes una cuenta?{" "}
-    //       <Link
-    //         to="/login"
-    //         href="#"
-    //         className="text-blue-500 focus:outline-none focus:underline hover:underline"
-    //       >
-    //         Iniciar sesión
-    //       </Link>
-    //       .
-    //     </p>
-    //   </div>
-    // </div>
   );
 };
 

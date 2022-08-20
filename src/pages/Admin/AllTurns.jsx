@@ -8,7 +8,7 @@ import { collection, getDocs, deleteDoc, doc } from "@firebase/firestore";
 import { db } from "../../firebase/firebase";
 import { Link } from "react-router-dom";
 import BgMain from "../../components/BgMain/BgMain";
-
+import IrArriba from "../../hooks/IrArriba";
 const Turns = () => {
   const reserved = useSelector((state) => state.turnsReserved.turns);
   const reservedCollection = collection(db, "turnos");
@@ -103,11 +103,20 @@ const Turns = () => {
                 <td>{turn.phone}</td>
                 <td>{turn.email}</td>
                 <td>
-                  {turn.email === "admin@admin.com" ? (
+                  {" "}
+                  <Link to={`/editar-turno/${turn.id}`}>
+                    <button
+                      onClick={() => IrArriba()}
+                      className="btn btn-warning"
+                    >
+                      Editar
+                    </button>
+                  </Link>
+                  {/* {turn.email === "admin@admin.com" ? (
                     <Link to={`/editar-turno/${turn.id}`}>
                       <button className="btn btn-warning">Editar</button>
                     </Link>
-                  ) : null}
+                  ) : null} */}
                 </td>
                 <td>
                   <button

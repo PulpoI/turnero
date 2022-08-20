@@ -25,24 +25,24 @@ Telefono:
 
 ## SweetAlert a:
 
-Cancelar turno
+Cancelar turno -
 Editar turno
 
 ## Yup
 
-Avisar errores en login
+Avisar errores en login -
 Avisar errores en register
 
 ## Filtrador
 
-Filtrar usuarios por nombre
-Filtrar usuarios por telefono
+Filtrar usuarios por nombre -
+Filtrar usuarios por telefono -
 Filtrar usuarios por email/user
 
 ## Editar perfil
 
-Editar user/email
-Editar telefono
+Editar user/email -
+Editar telefono -
 Editar nombre completo
 
 ## Vista smartphone
@@ -50,3 +50,9 @@ Editar nombre completo
 Editar tablas de:
 *Mis turnos  
 *Todos los turnos
+
+## Agregar skeleton
+
+## Agregar pequeñas alertas
+
+## Refactorizar componentes

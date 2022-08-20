@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { doc, updateDoc, getDoc } from "@firebase/firestore";
 import { db } from "../../firebase/firebase";
 import { useNavigate, useParams } from "react-router-dom";
-
 const EditTurn = () => {
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
@@ -15,7 +14,7 @@ const EditTurn = () => {
     const turn = doc(db, "turnos", id);
     const data = { fullName: fullName, phone: phone };
     await updateDoc(turn, data);
-    navigate("/mis-turnos");
+    navigate(-1);
   };
 
   const getProductById = async (id) => {
@@ -27,14 +26,17 @@ const EditTurn = () => {
       console.log("No existe el producto");
     }
   };
+  function backEdit() {
+    navigate(1);
+  }
 
   useEffect(() => {
     getProductById(id);
-  }, []);
+  }, [id]);
 
   return (
-    <div className="col-sm-12 col-md-12 form-section">
-      <div className="login-wrapper">
+    <div className="col  form-section my-4">
+      <div className="login-wrapper  border border-1 rounded p-3">
         <h2 className="login-title">Editar Turno</h2>
         <form onSubmit={update}>
           <div className="form-group">
@@ -56,47 +58,18 @@ const EditTurn = () => {
             />
           </div>
 
-          <div className="d-flex justify-content-between align-items-center mb-5">
+          <div className="d-flex justify-content-evenly align-items-center ">
             <button className="btn btn-dark" type="submit">
               {" "}
               Actualizar turno
             </button>
-
-            {/* <a href="#!" class="forgot-password-link">
-            Password?
-          </a> */}
+            <button onClick={() => backEdit()} className="btn btn-outline-dark">
+              Cancelar
+            </button>
           </div>
         </form>
       </div>
     </div>
-
-    // <div>
-    //   <h2>Editar Turno</h2>
-    //   <form onSubmit={update}>
-    //     <div className="mb-3">
-    //       <label className="form-label">Nombre y apellido</label>
-    //       <input
-    //         type="text"
-    //         className="form-control"
-    //         value={fullName}
-    //         onChange={(e) => setFullName(e.target.value)}
-    //       />
-    //     </div>
-    //     <div className="mb-3">
-    //       <label className="form-label">Teléfono</label>
-    //       <input
-    //         type="number"
-    //         className="form-control"
-    //         value={phone}
-    //         onChange={(e) => setPhone(e.target.value)}
-    //       />
-    //     </div>
-
-    //     <button type="submit" className="btn btn-primary">
-    //       Actualizar
-    //     </button>
-    //   </form>
-    // </div>
   );
 };
 
