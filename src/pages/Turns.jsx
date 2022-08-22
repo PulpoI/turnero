@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { FechaElegida } from "../hooks/FechaElegida";
 import BgMain from "../components/BgMain/BgMain";
 import irArriba from "../hooks/IrArriba";
+import { swalWithBootstrapButtons } from "../hooks/swalWithBootstrapButtons";
 
 const Turns = () => {
   const reserved = useSelector((state) => state.turnsReserved.turns);
@@ -42,10 +43,27 @@ const Turns = () => {
     .sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
 
   //function to cancel turn
-  const cancelTurn = async (id) => {
-    const turnDoc = doc(db, "turnos", id);
-    await deleteDoc(turnDoc);
-    getTurns();
+  const cancelTurn = (id) => {
+    swalWithBootstrapButtons
+      .fire({
+        title: "Estas seguro?",
+        text: "No podrás volver a recuperar esta acción!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Si, eliminar turno!",
+      })
+      .then(async (result) => {
+        if (result.isConfirmed) {
+          const turnDoc = doc(db, "turnos", id);
+          await deleteDoc(turnDoc);
+          swalWithBootstrapButtons.fire(
+            "Turno eliminado!",
+            "El turno ha sido eliminado.",
+            "success"
+          );
+        }
+        getTurns();
+      });
   };
 
   return (

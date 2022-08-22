@@ -40,7 +40,7 @@ const EditTurn = () => {
         <h2 className="login-title">Editar Turno</h2>
         <form onSubmit={update}>
           <div className="form-group">
-            <label className="sr-only">Email / Usuario</label>
+            <label className="sr-only">Nombre y Apellido</label>
             <input
               type="text"
               className="form-control"

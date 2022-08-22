@@ -119,7 +119,7 @@ const Modal = ({
                   className="btn btn-danger"
                   data-bs-dismiss="modal"
                 >
-                  Eliminar turno
+                  Cancelar turno
                 </button>
               ) : (
                 <form onSubmit={handleSubmit}>

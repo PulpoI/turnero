@@ -9,6 +9,8 @@ import { db } from "../../firebase/firebase";
 import { Link } from "react-router-dom";
 import BgMain from "../../components/BgMain/BgMain";
 import IrArriba from "../../hooks/IrArriba";
+import { swalWithBootstrapButtons } from "../../hooks/swalWithBootstrapButtons";
+
 const Turns = () => {
   const reserved = useSelector((state) => state.turnsReserved.turns);
   const reservedCollection = collection(db, "turnos");
@@ -65,10 +67,27 @@ const Turns = () => {
     }
   }, []);
 
-  const cancelTurn = async (id) => {
-    const turnDoc = doc(db, "turnos", id);
-    await deleteDoc(turnDoc);
-    getTurns();
+  const cancelTurn = (id) => {
+    swalWithBootstrapButtons
+      .fire({
+        title: "Estas seguro?",
+        text: "No podrás volver a recuperar esta acción!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Si, eliminar turno!",
+      })
+      .then(async (result) => {
+        if (result.isConfirmed) {
+          const turnDoc = doc(db, "turnos", id);
+          await deleteDoc(turnDoc);
+          swalWithBootstrapButtons.fire(
+            "Turno eliminado!",
+            "El turno ha sido eliminado.",
+            "success"
+          );
+        }
+        getTurns();
+      });
   };
 
   return (
@@ -104,19 +123,19 @@ const Turns = () => {
                 <td>{turn.email}</td>
                 <td>
                   {" "}
-                  <Link to={`/editar-turno/${turn.id}`}>
+                  {/* <Link to={`/editar-turno/${turn.id}`}>
                     <button
                       onClick={() => IrArriba()}
                       className="btn btn-warning"
                     >
                       Editar
                     </button>
-                  </Link>
-                  {/* {turn.email === "admin@admin.com" ? (
+                  </Link> */}
+                  {turn.email === "admin@admin.com" ? (
                     <Link to={`/editar-turno/${turn.id}`}>
                       <button className="btn btn-warning">Editar</button>
                     </Link>
-                  ) : null} */}
+                  ) : null}
                 </td>
                 <td>
                   <button
